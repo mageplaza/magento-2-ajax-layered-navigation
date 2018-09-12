@@ -1,0 +1,1 @@
+- User guide: https://docs.mageplaza.com/ajax-layer/index.html
