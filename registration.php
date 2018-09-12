@@ -14,13 +14,13 @@
  * version in the future.
  *
  * @category    Mageplaza
- * @package     Mageplaza_CustomOrderNumber
+ * @package     Mageplaza_AjaxLayer
  * @copyright   Copyright (c) Mageplaza (https://www.mageplaza.com/)
  * @license     https://www.mageplaza.com/LICENSE.txt
  */
 
 \Magento\Framework\Component\ComponentRegistrar::register(
     \Magento\Framework\Component\ComponentRegistrar::MODULE,
-    'Mageplaza_CustomOrderNumber',
+    'Mageplaza_AjaxLayer',
     __DIR__
 );
