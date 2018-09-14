@@ -1,0 +1,39 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Mageplaza
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Mageplaza.com license that is
+ * available through the world-wide-web at this URL:
+ * https://www.mageplaza.com/LICENSE.txt
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade this extension to newer
+ * version in the future.
+ *
+ * @category    Mageplaza
+ * @package     Mageplaza_AjaxLayer
+ * @copyright   Copyright (c) Mageplaza (http://www.mageplaza.com/)
+ * @license     https://www.mageplaza.com/LICENSE.txt
+ */
+-->
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <body>
+        <referenceBlock name="catalog.leftnav">
+            <action method="setTemplate" ifconfig="layered_navigation/general/ajax_enable">
+                <argument name="template" xsi:type="string">Mageplaza_AjaxLayer::layer/view.phtml</argument>
+            </action>
+        </referenceBlock>
+        <referenceContainer name="content">
+            <block class="Magento\Framework\View\Element\Template" name="layer.category.products" template="Mageplaza_AjaxLayer::products.phtml" />
+        </referenceContainer>
+        <referenceContainer name="sidebar.main">
+            <block class="Magento\Framework\View\Element\Template" name="layer.catalog.leftnav" template="Mageplaza_AjaxLayer::layer.phtml" />
+        </referenceContainer>
+        <move element="category.products" destination="layer.category.products"/>
+        <move element="catalog.leftnav" destination="layer.catalog.leftnav"/>
+    </body>
+</page>

@@ -20,11 +20,13 @@
  * @license     https://www.mageplaza.com/LICENSE.txt
  */
 -->
-<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Module/etc/module.xsd">
-    <module name="Mageplaza_AjaxLayer" setup_version="1.0.1">
-        <sequence>
-            <module name="Magento_Catalog"/>
-            <module name="Mageplaza_Core"/>
-        </sequence>
-    </module>
+
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Store:etc/config.xsd">
+    <default>
+        <layered_navigation>
+            <general>
+                <ajax_enable>1</ajax_enable>
+            </general>
+        </layered_navigation>
+    </default>
 </config>

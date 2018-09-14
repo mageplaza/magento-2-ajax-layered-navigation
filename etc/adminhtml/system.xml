@@ -1,0 +1,51 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Mageplaza
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Mageplaza.com license that is
+ * available through the world-wide-web at this URL:
+ * https://www.mageplaza.com/LICENSE.txt
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade this extension to newer
+ * version in the future.
+ *
+ * @category    Mageplaza
+ * @package     Mageplaza_AjaxLayer
+ * @copyright   Copyright (c) Mageplaza (http://www.mageplaza.com/)
+ * @license     https://www.mageplaza.com/LICENSE.txt
+ */
+-->
+
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
+    <system>
+        <section id="layered_navigation" translate="label" sortOrder="50" showInDefault="1" showInWebsite="1" showInStore="1">
+            <class>separator-top</class>
+            <label>Layered Navigation</label>
+            <tab>mageplaza</tab>
+            <resource>Mageplaza_AjaxLayer::configuration</resource>
+            <group id="general" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>General Configuration</label>
+                <field id="head" translate="label" type="button" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <frontend_model>Mageplaza\Core\Block\Adminhtml\System\Config\Head</frontend_model>
+                    <comment><![CDATA[
+                        <ul class="mageplaza-head">
+                            <li><a href="https://docs.mageplaza.com/layered-navigation-m2/" target="_blank">User Guide</a>    </li>
+                            <li><a href="https://mageplaza.freshdesk.com/support/discussions/forums/6000241382" target="_blank">Ask Community</a> </li>
+                            <li><a href="https://mageplaza.freshdesk.com/" target="_blank">Ask Mageplaza</a> </li>
+                            <li><strong><a href="https://www.mageplaza.com/?utm_source=magento2&utm_medium=documents&utm_campaign=layered-navigation" target="_blank">Find more extensions</a></strong> </li>
+                        </ul>
+                        ]]></comment>
+                </field>
+                <field id="ajax_enable" translate="label" type="select" sortOrder="15" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Ajax Enable</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+            </group>
+        </section>
+    </system>
+</config>

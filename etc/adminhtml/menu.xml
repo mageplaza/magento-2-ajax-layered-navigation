@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Mageplaza
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Mageplaza.com license that is
+ * available through the world-wide-web at this URL:
+ * https://www.mageplaza.com/LICENSE.txt
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade this extension to newer
+ * version in the future.
+ *
+ * @category    Mageplaza
+ * @package     Mageplaza_AjaxLayer
+ * @copyright   Copyright (c) Mageplaza (http://www.mageplaza.com/)
+ * @license     https://www.mageplaza.com/LICENSE.txt
+ */
+-->
+
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
+    <menu>
+        <add id="Mageplaza_AjaxLayer::ajax" title="Layered Navigation" module="Mageplaza_AjaxLayer" sortOrder="100" resource="Mageplaza_AjaxLayer::configuration" parent="Mageplaza_Core::menu"/>
+        <add id="Mageplaza_AjaxLayer::configuration" title="Configuration" module="Mageplaza_AjaxLayer" sortOrder="1000" action="adminhtml/system_config/edit/section/layered_navigation" resource="Mageplaza_AjaxLayer::configuration" parent="Mageplaza_AjaxLayer::ajax"/>
+    </menu>
+</config>

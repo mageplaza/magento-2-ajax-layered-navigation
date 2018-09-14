@@ -1,5 +1,3 @@
-<?xml version="1.0"?>
-<!--
 /**
  * Mageplaza
  *
@@ -19,12 +17,9 @@
  * @copyright   Copyright (c) Mageplaza (http://www.mageplaza.com/)
  * @license     https://www.mageplaza.com/LICENSE.txt
  */
--->
-<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Module/etc/module.xsd">
-    <module name="Mageplaza_AjaxLayer" setup_version="1.0.1">
-        <sequence>
-            <module name="Magento_Catalog"/>
-            <module name="Mageplaza_Core"/>
-        </sequence>
-    </module>
-</config>
+
+var config = {
+    paths: {
+        mpAjax: 'Mageplaza_AjaxLayer/js/view/layer'
+    }
+};
