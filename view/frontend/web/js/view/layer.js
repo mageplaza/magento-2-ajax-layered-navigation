@@ -38,9 +38,9 @@ define([
             collapsibleElement: '[data-role=ln_collapsible]',
             header: '[data-role=ln_title]',
             content: '[data-role=ln_content]',
+            isCustomerLoggedIn: false,
             params: [],
-            active: [],
-            checkboxEl: 'input[type=checkbox]'
+            active: []
         },
 
         _create: function () {
@@ -50,6 +50,7 @@ define([
 
             this.initProductListUrl();
             this.initObserve();
+            this.initWishlistCompare();
         },
 
         initActiveItems: function () {
@@ -102,7 +103,7 @@ define([
 
         initObserve: function () {
             var self = this;
-            
+
             var pageElements = $('#layer-product-list').find('.pages a');
             pageElements.each(function () {
                 var el = $(this),
@@ -110,12 +111,12 @@ define([
                 if (!link) {
                     return;
                 }
+
                 el.bind('click', function (e) {
                     submitFilterAction(link);
                     e.stopPropagation();
                     e.preventDefault();
                 })
-
             });
             
             var currentElements = this.element.find('.filter-current a, .filter-actions a');
@@ -190,6 +191,29 @@ define([
             var regex = /(http|https):\/\/(\w+:{0,1}\w*)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%!\-\/]))?/;
 
             return regex.test(url) ? url : null;
+        },
+
+        //Handling 'add to wishlist' & 'add to compare' event
+        initWishlistCompare: function () {
+            var elClass = 'a.action.tocompare' + (this.options.isCustomerLoggedIn ? ',a.action.towishlist' : '');
+            $(elClass).each(function () {
+                var el = $(this);
+
+                var dataPost = el.data('post'),
+                    formKey = $('input[name="form_key"]').val();
+                if (formKey) {
+                    dataPost.data.form_key = formKey;
+                }
+
+                var paramData = $.param(dataPost.data),
+                    url = dataPost.action + (paramData.length ? '?' + paramData : '');
+
+                el.bind('click', function (e) {
+                    submitFilterAction(url, true);
+                    e.stopPropagation();
+                    e.preventDefault();
+                });
+            })
         }
     });
 

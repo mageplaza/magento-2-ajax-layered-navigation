@@ -38,6 +38,7 @@ define(
              */
             stopLoader: function () {
                 $('.ln_overlay').hide();
+                $('.swatch-option-tooltip').hide();
             }
         };
     }

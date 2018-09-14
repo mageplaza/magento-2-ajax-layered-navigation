@@ -22,15 +22,16 @@ define(
     [
         'jquery',
         'mage/storage',
-        'Mageplaza_AjaxLayer/js/model/loader'
+        'Mageplaza_AjaxLayer/js/model/loader',
+        'mage/apply/main'
     ],
-    function ($, storage, loader) {
+    function ($, storage, loader, mage) {
         'use strict';
 
         var productContainer = $('#layer-product-list'),
             layerContainer = $('.layered-filter-block-container');
 
-        return function (submitUrl) {
+        return function (submitUrl, isChangeUrl) {
             /** save active state */
             var actives = [];
             $('.filter-options-item').each(function (index) {
@@ -44,7 +45,7 @@ define(
             loader.startLoader();
 
             /** change browser url */
-            if (typeof window.history.pushState === 'function') {
+            if (typeof window.history.pushState === 'function' && (typeof isChangeUrl === 'undefined')) {
                 window.history.pushState({url: submitUrl}, '', submitUrl);
             }
 
@@ -59,11 +60,13 @@ define(
                     }
                     if (response.navigation) {
                         layerContainer.html(response.navigation);
-                        layerContainer.trigger('contentUpdated');
                     }
                     if (response.products) {
                         productContainer.html(response.products);
-                        productContainer.trigger('contentUpdated');
+                    }
+
+                    if (mage) {
+                        mage.apply();
                     }
                 }
             ).fail(
