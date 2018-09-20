@@ -23,7 +23,7 @@
 
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
     <menu>
-        <add id="Mageplaza_AjaxLayer::ajax" title="Layered Navigation" module="Mageplaza_AjaxLayer" sortOrder="100" resource="Mageplaza_AjaxLayer::configuration" parent="Mageplaza_Core::menu"/>
-        <add id="Mageplaza_AjaxLayer::configuration" title="Configuration" module="Mageplaza_AjaxLayer" sortOrder="1000" action="adminhtml/system_config/edit/section/layered_navigation" resource="Mageplaza_AjaxLayer::configuration" parent="Mageplaza_AjaxLayer::ajax"/>
+        <add id="Mageplaza_AjaxLayer::layer" title="Layered Navigation" module="Mageplaza_AjaxLayer" sortOrder="100" resource="Mageplaza_AjaxLayer::configuration" parent="Mageplaza_Core::menu"/>
+        <add id="Mageplaza_AjaxLayer::configuration" title="Configuration" module="Mageplaza_AjaxLayer" sortOrder="1000" action="adminhtml/system_config/edit/section/layered_navigation" resource="Mageplaza_AjaxLayer::configuration" parent="Mageplaza_AjaxLayer::layer"/>
     </menu>
 </config>
