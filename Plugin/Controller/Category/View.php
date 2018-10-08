@@ -58,11 +58,6 @@ class View
             $result     = ['products' => $products->toHtml(), 'navigation' => $navigation->toHtml()];
             $action->getResponse()->representJson($this->_jsonHelper->jsonEncode($result));
         }
-        elseif (!$this->_moduleHelper->ajaxEnabled() && $action->getRequest()->isAjax()){
-            $ajax       = 0;
-            $result     = ['ajax' => $ajax];
-            $action->getResponse()->representJson($this->_jsonHelper->jsonEncode($result));
-        }
         else {
             return $page;
         }
