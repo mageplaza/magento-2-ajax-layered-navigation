@@ -55,9 +55,6 @@ define(
                         window.location = response.backUrl;
                         return;
                     }
-                    if (response.ajax == 0) {
-                        window.location.reload();
-                    }
                     if (response.navigation) {
                         layerContainer.html(response.navigation);
                     }
