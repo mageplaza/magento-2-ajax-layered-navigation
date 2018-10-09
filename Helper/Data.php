@@ -65,12 +65,13 @@ class Data extends AbstractData
         $filterParams = $this->_getRequest()->getParams();
         $config       = new \Magento\Framework\DataObject([
             'active' => array_keys($filterParams),
-            'params' => $filterParams
+            'params' => $filterParams,
+            'isCustomerLoggedIn' => $this->objectManager->get('Magento\Customer\Model\Session')->isLoggedIn()
         ]);
 
         $this->getFilterModel()->getLayerConfiguration($filters, $config);
 
-        return $this->objectManager->get('Magento\Framework\Json\EncoderInterface')->encode($config->getData());
+        return self::jsonEncode($config->getData());
     }
 
     /**
