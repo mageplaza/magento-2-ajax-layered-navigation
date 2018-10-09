@@ -66,7 +66,7 @@ class Data extends AbstractData
         $config       = new \Magento\Framework\DataObject([
             'active' => array_keys($filterParams),
             'params' => $filterParams,
-            'isCustomerLoggedIn' => $this->objectManager->get('Magento\Customer\Model\Session')->isLoggedIn()
+            'isCustomerLoggedIn' => $this->objectManager->create('Magento\Customer\Model\Session')->isLoggedIn()
         ]);
 
         $this->getFilterModel()->getLayerConfiguration($filters, $config);
