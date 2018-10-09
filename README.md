@@ -2,9 +2,9 @@
 
 Product filtering is one of the most used features which every customer craves on your online store. To clarify, product filtering is an application that buyers select one or multiple product attributes to search for specific products which match their needs.
 
-On an online store which there is no existence of shopping assistants, customers need nothing but an effective product filtering/searching tool. It would seem strange if your Magento 2 store had no Layered Navigation because other e-commerce websites, today, are even trying to enhance their filtering systems to optimize UX on their platforms.
+On an online store which there is no existence of shopping assistants, customers need nothing but an effective product filtering/searching tool. It would seem strange if your Magento 2 store had no **Layered Navigation** because other e-commerce websites, today, are even trying to enhance their filtering systems to optimize UX on their platforms.
 
-To boost filtering experience for buyers, Ajax Layered Navigation extension for Magento 2 allows filtered products to appear immediately after every single filtering action. Hence, there is no painfully-long-seem-to-be waiting time between each filter, and customers will be more likely to enjoy their time shopping on your store. 
+To boost filtering experience for buyers, [Ajax Layered Navigation extension]() for Magento 2 allows filtered products to appear immediately after every single filtering action. Hence, there is no painfully-long-seem-to-be waiting time between each filter, and customers will be more likely to enjoy their time shopping on your store. 
 
 
 ## 1. Documentation
@@ -42,7 +42,7 @@ php bin/magento setup:static-content:deploy
 
 Visually, Ajax plays an amazing role in your store UX improvement because of many advantages. Ajax, according to [Sequetech](https://www.seguetech.com/ajax-technology/), is a method which helps to exchange and update only one or several parts of a web page without reloading the whole site. As a result, the page loading speed is cut down optimally, and this allows your online shoppers to avoid unnecessary waiting time. Ajax Navigation is also an answer to the question “How to keep your clients on your store when the internet connection sucks”. They will no longer need to wait for all the data to be loaded before performing any of other actions on the page.
 
-As Ajax Layered Navigation enables pages to prevent performing a full postback, filtering products are more responsive, faster and way more user-friendly. This is how shopping experience is boosted.
+As **Ajax Layered Navigation** enables pages to prevent performing a full postback, filtering products are more responsive, faster and way more user-friendly. This is how shopping experience is boosted.
 
 ### Lightening-fast Ajax Navigation
 
@@ -62,14 +62,14 @@ Even when shopper performs multi-filtering, Ajax Layered still supports to displ
 
 ## 5. User Guide
 
-Ajax Layered Navigation features are added to filters and page blocks, which assists users to select each attribute from filters and various categories without reloading the entire page. As a result, it will enhance the user experience, reduce response and server uploading time. This is the new feature of Mageplaza Ajax Layered Navigation which fully compatible with Layered Navigation extension.
+**Ajax Layered Navigation** features are added to filters and page blocks, which assists users to select each attribute from filters and various categories without reloading the entire page. As a result, it will enhance the user experience, reduce response and server uploading time. This is the new feature of Mageplaza Ajax Layered Navigation which fully compatible with Layered Navigation extension.
 
 The Ajax Layered Navigation tutorial of Mageplaza below will provide detailed instruction on how to use for user interface and how to configure on the admin backend.
 
 
 ### How to Config
 
-From the admin panel, make your way to Mageplaza > Layered Navigation > Configuration
+From the admin panel, make your way to ``Mageplaza > Layered Navigation > Configuration``
 
 ![how to configure](https://i.imgur.com/lKM4Yiz.png)
 
