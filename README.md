@@ -33,7 +33,7 @@ To boost filtering experience for buyers, [Ajax Layered Navigation extension for
 Run the following command in Magento 2 root folder:
 
 ```
-composer require mageplaza/module-smtp
+composer require mageplaza/module-ajax-layered-navigation
 php bin/magento setup:upgrade
 php bin/magento setup:static-content:deploy
 ```
