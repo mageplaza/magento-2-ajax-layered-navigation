@@ -4,7 +4,7 @@ Product filtering is one of the most used features which every customer craves o
 
 On an online store which there is no existence of shopping assistants, customers need nothing but an effective product filtering/searching tool. It would seem strange if your Magento 2 store had no **Layered Navigation** because other e-commerce websites, today, are even trying to enhance their filtering systems to optimize UX on their platforms.
 
-To boost filtering experience for buyers, [Ajax Layered Navigation extension for Magento 2]() allows filtered products to appear immediately after every single filtering action. Hence, there is no painfully-long-seem-to-be waiting time between each filter, and customers will be more likely to enjoy their time shopping on your store. 
+To boost filtering experience for buyers, [Ajax Layered Navigation extension for Magento 2]() allows filtered products to appear immediately after every single filtering action. Hence, there is no seem-to-be-painfully-long waiting time between each filter, and customers will be more likely to enjoy their time shopping on your store. 
 
 
 ## 1. Documentation
