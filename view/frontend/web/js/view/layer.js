@@ -195,20 +195,20 @@ define([
 
         //Handling 'add to wishlist' & 'add to compare' event
         initWishlistCompare: function () {
-            var elClass = 'a.action.tocompare' + (this.options.isCustomerLoggedIn ? ',a.action.towishlist' : '');
+            var isCustomerLoggedIn = this.options.isCustomerLoggedIn,
+                elClass = 'a.action.tocompare' + (isCustomerLoggedIn ? ',a.action.towishlist' : '');
             $(elClass).each(function () {
                 var el = $(this);
+                $(el).bind('click', function (e) {
+                    var dataPost = $(el).data('post'),
+                        formKey = $('input[name="form_key"]').val();
+                    if (formKey) {
+                        dataPost.data.form_key = formKey;
+                    }
 
-                var dataPost = el.data('post'),
-                    formKey = $('input[name="form_key"]').val();
-                if (formKey) {
-                    dataPost.data.form_key = formKey;
-                }
+                    var paramData = $.param(dataPost.data),
+                        url = dataPost.action + (paramData.length ? '?' + paramData : '');
 
-                var paramData = $.param(dataPost.data),
-                    url = dataPost.action + (paramData.length ? '?' + paramData : '');
-
-                el.bind('click', function (e) {
                     submitFilterAction(url, true);
                     e.stopPropagation();
                     e.preventDefault();
