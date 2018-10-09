@@ -127,7 +127,7 @@ class Index extends \Magento\Framework\App\Action\Action
             $this->_helper->checkNotes();
             $this->_view->loadLayout();
 
-            if ($this->_moduleHelper->isEnabled() && $this->getRequest()->isAjax()) {
+            if ($this->_moduleHelper->ajaxEnabled() && $this->getRequest()->isAjax()) {
                 $navigation = $this->_view->getLayout()->getBlock('catalogsearch.leftnav');
                 $products   = $this->_view->getLayout()->getBlock('search.result');
                 $result     = [
