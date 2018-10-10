@@ -20,14 +20,13 @@
  * @license     https://www.mageplaza.com/LICENSE.txt
  */
 -->
-
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
     <system>
         <section id="layered_navigation" translate="label" sortOrder="50" showInDefault="1" showInWebsite="1" showInStore="1">
             <class>separator-top</class>
-            <label>Layered Navigation</label>
+            <label>Ajax Layered Navigation</label>
             <tab>mageplaza</tab>
-            <resource>Mageplaza_AjaxLayer::configuration</resource>
+            <resource>Mageplaza_LayeredNavigation::configuration</resource>
             <group id="general" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
                 <label>General Configuration</label>
                 <field id="head" translate="label" type="button" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="1">
@@ -42,7 +41,7 @@
                         ]]></comment>
                 </field>
                 <field id="ajax_enable" translate="label" type="select" sortOrder="15" showInDefault="1" showInWebsite="1" showInStore="1">
-                    <label>Ajax Enable</label>
+                    <label>Enable</label>
                     <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
                 </field>
             </group>

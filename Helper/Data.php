@@ -29,7 +29,8 @@ use Mageplaza\Core\Helper\AbstractData;
  */
 class Data extends AbstractData
 {
-    const FILTER_TYPE_LIST = 'list';
+    const CONFIG_MODULE_PATH = 'layered_navigation';
+    const FILTER_TYPE_LIST   = 'list';
 
     /** @var \Mageplaza\LayeredNavigation\Model\Layer\Filter */
     protected $filterModel;
@@ -41,19 +42,7 @@ class Data extends AbstractData
      */
     public function ajaxEnabled($storeId = null)
     {
-        return $this->getGeneralConfig('ajax_enable', $storeId) && $this->isModuleOutputEnabled();
-    }
-
-    /**
-     * @param string $code
-     * @param null $storeId
-     * @return mixed
-     */
-    public function getGeneralConfig($code = '', $storeId = null)
-    {
-        $code = ($code !== '') ? '/' . $code : '';
-
-        return $this->getConfigValue('layered_navigation/general' . $code, $storeId);
+        return $this->getConfigGeneral('ajax_enable', $storeId) && $this->isModuleOutputEnabled();
     }
 
     /**
@@ -64,33 +53,11 @@ class Data extends AbstractData
     {
         $filterParams = $this->_getRequest()->getParams();
         $config       = new \Magento\Framework\DataObject([
-            'active' => array_keys($filterParams),
-            'params' => $filterParams,
+            'active'             => array_keys($filterParams),
+            'params'             => $filterParams,
             'isCustomerLoggedIn' => $this->objectManager->create('Magento\Customer\Model\Session')->isLoggedIn()
         ]);
 
-        $this->getFilterModel()->getLayerConfiguration($filters, $config);
-
         return self::jsonEncode($config->getData());
-    }
-
-    /**
-     * @return \Mageplaza\LayeredNavigation\Model\Layer\Filter
-     */
-    public function getFilterModel()
-    {
-        if (!$this->filterModel) {
-            $this->filterModel = $this->objectManager->create('Mageplaza\AjaxLayer\Model\Layer\Filter');
-        }
-
-        return $this->filterModel;
-    }
-
-    /**
-     * @return \Magento\Framework\ObjectManagerInterface
-     */
-    public function getObjectManager()
-    {
-        return $this->objectManager;
     }
 }

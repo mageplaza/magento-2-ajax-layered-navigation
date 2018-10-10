@@ -23,15 +23,19 @@ namespace Mageplaza\AjaxLayer\Controller\Search\Result;
 
 use Magento\Catalog\Model\Layer\Resolver;
 use Magento\Catalog\Model\Session;
+use Magento\CatalogSearch\Helper\Data;
+use Magento\Framework\App\Action\Action;
 use Magento\Framework\App\Action\Context;
+use Magento\Framework\Json\Helper\Data as JsonData;
 use Magento\Search\Model\QueryFactory;
 use Magento\Store\Model\StoreManagerInterface;
+use Mageplaza\AjaxLayer\Helper\Data as HelperData;
 
 /**
  * Class Index
  * @package Mageplaza\LayeredNavigation\Controller\Search\Result
  */
-class Index extends \Magento\Framework\App\Action\Action
+class Index extends Action
 {
     /**
      * Catalog session
@@ -44,22 +48,27 @@ class Index extends \Magento\Framework\App\Action\Action
      * @var StoreManagerInterface
      */
     protected $_storeManager;
+
     /**
-     * @type \Magento\Framework\Json\Helper\Data
+     * @type JsonData
      */
     protected $_jsonHelper;
+
     /**
      * @type \Mageplaza\LayeredNavigation\Helper\Data
      */
     protected $_moduleHelper;
+
     /**
-     * @type \Magento\CatalogSearch\Helper\Data
+     * @type Data
      */
     protected $_helper;
+
     /**
      * @var QueryFactory
      */
     private $_queryFactory;
+
     /**
      * Catalog Layer Resolver
      *
@@ -68,14 +77,15 @@ class Index extends \Magento\Framework\App\Action\Action
     private $layerResolver;
 
     /**
-     * @param \Magento\Framework\App\Action\Context $context
-     * @param \Magento\Catalog\Model\Session $catalogSession
-     * @param \Magento\Store\Model\StoreManagerInterface $storeManager
-     * @param \Magento\Search\Model\QueryFactory $queryFactory
-     * @param \Magento\Catalog\Model\Layer\Resolver $layerResolver
-     * @param \Magento\CatalogSearch\Helper\Data $helper
-     * @param \Magento\Framework\Json\Helper\Data $jsonHelper
-     * @param \Mageplaza\LayeredNavigation\Helper\Data $moduleHelper
+     * Index constructor.
+     * @param Context $context
+     * @param Session $catalogSession
+     * @param StoreManagerInterface $storeManager
+     * @param QueryFactory $queryFactory
+     * @param Resolver $layerResolver
+     * @param Data $helper
+     * @param JsonData $jsonHelper
+     * @param HelperData $moduleHelper
      */
     public function __construct(
         Context $context,
@@ -83,12 +93,11 @@ class Index extends \Magento\Framework\App\Action\Action
         StoreManagerInterface $storeManager,
         QueryFactory $queryFactory,
         Resolver $layerResolver,
-        \Magento\CatalogSearch\Helper\Data $helper,
-        \Magento\Framework\Json\Helper\Data $jsonHelper,
-        \Mageplaza\AjaxLayer\Helper\Data $moduleHelper
-    ) {
-    
-        parent::__construct($context);
+        Data $helper,
+        JsonData $jsonHelper,
+        HelperData $moduleHelper
+    )
+    {
         $this->_storeManager   = $storeManager;
         $this->_catalogSession = $catalogSession;
         $this->_queryFactory   = $queryFactory;
@@ -96,12 +105,13 @@ class Index extends \Magento\Framework\App\Action\Action
         $this->_jsonHelper     = $jsonHelper;
         $this->_moduleHelper   = $moduleHelper;
         $this->_helper         = $helper;
+
+        parent::__construct($context);
     }
 
     /**
-     * Display search result
-     *
-     * @return void
+     * @return \Magento\Framework\App\ResponseInterface|\Magento\Framework\Controller\ResultInterface|void
+     * @throws \Magento\Framework\Exception\LocalizedException
      */
     public function execute()
     {
@@ -131,7 +141,7 @@ class Index extends \Magento\Framework\App\Action\Action
                 $navigation = $this->_view->getLayout()->getBlock('catalogsearch.leftnav');
                 $products   = $this->_view->getLayout()->getBlock('search.result');
                 $result     = [
-                    'products' => $products->toHtml(),
+                    'products'   => $products->toHtml(),
                     'navigation' => $navigation->toHtml()
                 ];
                 $this->getResponse()->representJson($this->_jsonHelper->jsonEncode($result));

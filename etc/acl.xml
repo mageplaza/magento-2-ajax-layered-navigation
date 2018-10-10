@@ -20,7 +20,6 @@
  * @license     https://www.mageplaza.com/LICENSE.txt
  */
 -->
-
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Acl/etc/acl.xsd">
     <acl>
         <resources>
@@ -28,7 +27,7 @@
                 <resource id="Magento_Backend::stores">
                     <resource id="Magento_Backend::stores_settings">
                         <resource id="Magento_Config::config">
-                            <resource id="Mageplaza_AjaxLayer::configuration" title="Mageplaza Ajax Layered Navigation"/>
+                            <resource id="Mageplaza_LayeredNavigation::configuration" title="Mageplaza Ajax Layered Navigation"/>
                         </resource>
                     </resource>
                 </resource>

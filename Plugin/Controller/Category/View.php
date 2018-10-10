@@ -34,15 +34,17 @@ class View
     protected $_moduleHelper;
 
     /**
+     * View constructor.
      * @param \Magento\Framework\Json\Helper\Data $jsonHelper
-     * @param \Mageplaza\LayeredNavigation\Helper\Data $moduleHelper
+     * @param \Mageplaza\AjaxLayer\Helper\Data $moduleHelper
      */
     public function __construct(
         \Magento\Framework\Json\Helper\Data $jsonHelper,
         \Mageplaza\AjaxLayer\Helper\Data $moduleHelper
-    ) {
+    )
+    {
         $this->_jsonHelper   = $jsonHelper;
-        $this->_moduleHelper   = $moduleHelper;
+        $this->_moduleHelper = $moduleHelper;
     }
 
     /**
@@ -57,8 +59,7 @@ class View
             $products   = $page->getLayout()->getBlock('category.products');
             $result     = ['products' => $products->toHtml(), 'navigation' => $navigation->toHtml()];
             $action->getResponse()->representJson($this->_jsonHelper->jsonEncode($result));
-        }
-        else {
+        } else {
             return $page;
         }
     }

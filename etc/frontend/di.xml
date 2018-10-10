@@ -23,6 +23,6 @@
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
     <preference for="Magento\CatalogSearch\Controller\Result\Index" type="Mageplaza\AjaxLayer\Controller\Search\Result\Index"/>
     <type name="Magento\Catalog\Controller\Category\View">
-        <plugin name="ajax_layer_navigation" type="Mageplaza\AjaxLayer\Plugin\Controller\Category\View" sortOrder="1" />
+        <plugin name="ajax_layer_navigation" type="Mageplaza\AjaxLayer\Plugin\Controller\Category\View" sortOrder="1"/>
     </type>
 </config>

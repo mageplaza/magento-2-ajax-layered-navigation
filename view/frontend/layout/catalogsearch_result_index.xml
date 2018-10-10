@@ -33,10 +33,10 @@
             </action>
         </referenceBlock>
         <referenceContainer name="content">
-            <block class="Magento\Framework\View\Element\Template" name="layer.category.products" template="Mageplaza_AjaxLayer::products.phtml" />
+            <block class="Magento\Framework\View\Element\Template" name="layer.category.products" template="Mageplaza_AjaxLayer::products.phtml"/>
         </referenceContainer>
         <referenceContainer name="sidebar.main">
-            <block class="Magento\Framework\View\Element\Template" name="layer.catalog.leftnav" template="Mageplaza_AjaxLayer::layer.phtml" />
+            <block class="Magento\Framework\View\Element\Template" name="layer.catalog.leftnav" template="Mageplaza_AjaxLayer::layer.phtml"/>
         </referenceContainer>
         <move element="search.result" destination="layer.category.products"/>
         <move element="catalogsearch.leftnav" destination="layer.catalog.leftnav"/>

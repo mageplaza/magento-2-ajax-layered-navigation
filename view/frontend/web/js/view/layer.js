@@ -118,7 +118,7 @@ define([
                     e.preventDefault();
                 })
             });
-            
+
             var currentElements = this.element.find('.filter-current a, .filter-actions a');
             currentElements.each(function (index) {
                 var el = $(this),
