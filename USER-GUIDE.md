@@ -1,8 +1,8 @@
 ## Documentation
 
 - Installation guide: https://www.mageplaza.com/install-magento-2-extension/#solution-1-ready-to-paste
-- User Guide: https://docs.mageplaza.com/ajax-layer/index.html
-- Product page: https://www.mageplaza.com/magento-2-ajax-layer/
+- User Guide: https://docs.mageplaza.com/ajax-layered-navigation/index.html
+- Product page: https://www.mageplaza.com/magento-2-ajax-layered-navigation/
 - FAQs: https://www.mageplaza.com/faqs/
 - Get Support: https://mageplaza.freshdesk.com/ or support@mageplaza.com
 - Changelog: https://www.mageplaza.com/changelog/m2-ajax-layer.txt

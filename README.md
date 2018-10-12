@@ -10,7 +10,7 @@ To boost filtering experience for buyers, [Ajax Layered Navigation extension for
 ## 1. Documentation
 
 - [Installation guide](https://www.mageplaza.com/install-magento-2-extension/)
-- [User Guide](https://www.mageplaza.com/magento-2-smtp/user-guide.html)
+- [User Guide](https://docs.mageplaza.com/ajax-layered-navigation/index.html)
 - [Contribute on Github](https://github.com/mageplaza/magento-2-ajax-layered-navigation)
 - [Get Support](https://github.com/mageplaza/magento-2-ajax-layered-navigation/issues)
 
