@@ -23,7 +23,7 @@ To boost filtering experience for buyers, [Ajax Layered Navigation extension for
 
 - **Q: Is Mageplaza Ajax Layered Navigation extension compatible with Layered Navigation for Magento 2?**
 
-- A: Yes! Ajax Layered Navigation extension is fully compatible with all packages of [Mageplaza Layered navigation for Magento 2](https://www.mageplaza.com/magento-2-layered-navigation-extension/) for Magento 2. This compatibility helps enhance UX for shoppers at the highest level.
+- A: Yes! Ajax Layered Navigation extension is fully compatible with all packages of [Mageplaza Layered navigation for Magento 2](https://www.mageplaza.com/magento-2-layered-navigation-extension/). This compatibility helps enhance UX for shoppers at the highest level.
 
 
 ## 3. How to install Ajax Layered Navigation extension for Magento 2
