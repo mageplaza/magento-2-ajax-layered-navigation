@@ -27,11 +27,6 @@
                 <argument name="template" xsi:type="string">Mageplaza_AjaxLayer::layer/view.phtml</argument>
             </action>
         </referenceBlock>
-        <referenceBlock name="catalogsearch.navigation.renderer">
-            <action method="setTemplate" ifconfig="layered_navigation/general/ajax_enable">
-                <argument name="template" xsi:type="string">Mageplaza_AjaxLayer::layer/filter.phtml</argument>
-            </action>
-        </referenceBlock>
         <referenceContainer name="content">
             <block class="Magento\Framework\View\Element\Template" name="layer.category.products" template="Mageplaza_AjaxLayer::products.phtml"/>
         </referenceContainer>
