@@ -57,7 +57,12 @@ class View
         if ($this->_moduleHelper->ajaxEnabled() && $action->getRequest()->isAjax()) {
             $navigation = $page->getLayout()->getBlock('catalog.leftnav');
             $products   = $page->getLayout()->getBlock('category.products');
-            $result     = ['products' => $products->toHtml(), 'navigation' => $navigation->toHtml()];
+            if ($this->_moduleHelper->getConfigValue('mpquickview/general/enabled')) {
+                $quickView = $page->getLayout()->getBlock('mpquickview.quickview');
+                $result    = ['products' => $products->toHtml(), 'navigation' => $navigation->toHtml(), 'quickview' => $quickView->toHtml()];
+            } else {
+                $result = ['products' => $products->toHtml(), 'navigation' => $navigation->toHtml()];
+            }
             $action->getResponse()->representJson($this->_jsonHelper->jsonEncode($result));
         } else {
             return $page;

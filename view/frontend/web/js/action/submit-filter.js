@@ -29,7 +29,8 @@ define(
         'use strict';
 
         var productContainer = $('#layer-product-list'),
-            layerContainer = $('.layered-filter-block-container');
+            layerContainer = $('.layered-filter-block-container'),
+            quickViewContainer = $('#mpquickview-popup');
 
         return function (submitUrl, isChangeUrl) {
             /** save active state */
@@ -60,6 +61,9 @@ define(
                     }
                     if (response.products) {
                         productContainer.html(response.products);
+                    }
+                    if (response.quickview) {
+                        quickViewContainer.html(response.quickview);
                     }
 
                     if (mage) {
