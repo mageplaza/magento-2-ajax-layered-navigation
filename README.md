@@ -1,10 +1,10 @@
-# Magento 2 Ajax Layered Navigation
+# Magento 2 Ajax Layered Navigation Mageplaza
 
 Product filtering is one of the most used features which every customer craves on your online store. To clarify, product filtering is an application that buyers select one or multiple product attributes to search for specific products which match their needs.
 
 On an online store which there is no existence of shopping assistants, customers need nothing but an effective product filtering/searching tool. It would seem strange if your Magento 2 store had no **Layered Navigation** because other e-commerce websites, today, are even trying to enhance their filtering systems to optimize UX on their platforms.
 
-To boost filtering experience for buyers, [Ajax Layered Navigation extension for Magento 2]() allows filtered products to appear immediately after every single filtering action. Hence, there is no seem-to-be-painfully-long waiting time between each filter, and customers will be more likely to enjoy their time shopping on your store. 
+To boost filtering experience for buyers, [Ajax Layered Navigation extension for Magento 2](https://www.mageplaza.com/magento-2-ajax-layered-navigation/) allows filtered products to appear immediately after every single filtering action. Hence, there is no seem-to-be-painfully-long waiting time between each filter, and customers will be more likely to enjoy their time shopping on your store. 
 
 
 ## 1. Documentation
@@ -23,7 +23,7 @@ To boost filtering experience for buyers, [Ajax Layered Navigation extension for
 
 - **Q: Is Mageplaza Ajax Layered Navigation extension compatible with Layered Navigation for Magento 2?**
 
-- A: Yes! Ajax Layered Navigation extension is fully compatible with all packages of [Mageplaza Layered navigation](https://www.mageplaza.com/magento-2-layered-navigation-extension/) for Magento 2. This compatibility helps enhance UX for shoppers at the highest level.
+- A: Yes! Ajax Layered Navigation extension is fully compatible with all packages of [Mageplaza Layered Navigation for Magento 2](https://www.mageplaza.com/magento-2-layered-navigation-extension/). This compatibility helps enhance UX for shoppers at the highest level.
 
 
 ## 3. How to install Ajax Layered Navigation extension for Magento 2

@@ -78,6 +78,7 @@ class Index extends Action
 
     /**
      * Index constructor.
+     *
      * @param Context $context
      * @param Session $catalogSession
      * @param StoreManagerInterface $storeManager
@@ -96,15 +97,14 @@ class Index extends Action
         Data $helper,
         JsonData $jsonHelper,
         HelperData $moduleHelper
-    )
-    {
-        $this->_storeManager   = $storeManager;
+    ) {
+        $this->_storeManager = $storeManager;
         $this->_catalogSession = $catalogSession;
-        $this->_queryFactory   = $queryFactory;
-        $this->layerResolver   = $layerResolver;
-        $this->_jsonHelper     = $jsonHelper;
-        $this->_moduleHelper   = $moduleHelper;
-        $this->_helper         = $helper;
+        $this->_queryFactory = $queryFactory;
+        $this->layerResolver = $layerResolver;
+        $this->_jsonHelper = $jsonHelper;
+        $this->_moduleHelper = $moduleHelper;
+        $this->_helper = $helper;
 
         parent::__construct($context);
     }
@@ -139,8 +139,8 @@ class Index extends Action
 
             if ($this->_moduleHelper->ajaxEnabled() && $this->getRequest()->isAjax()) {
                 $navigation = $this->_view->getLayout()->getBlock('catalogsearch.leftnav');
-                $products   = $this->_view->getLayout()->getBlock('search.result');
-                $result     = [
+                $products = $this->_view->getLayout()->getBlock('search.result');
+                $result = [
                     'products'   => $products->toHtml(),
                     'navigation' => $navigation->toHtml()
                 ];

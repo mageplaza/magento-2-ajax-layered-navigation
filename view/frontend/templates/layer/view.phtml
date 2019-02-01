@@ -19,11 +19,11 @@
  * @license     https://www.mageplaza.com/LICENSE.txt
  */
 ?>
-<?php if ($block->canShowBlock()): ?>
+<?php if ($block->canShowBlock()) : ?>
     <?php
-    $filters     = $block->getFilters();
+    $filters = $block->getFilters();
     $layerConfig = $this->helper('Mageplaza\AjaxLayer\Helper\Data')->getLayerConfiguration($filters);
-    $filtered    = count($block->getLayer()->getState()->getFilters());
+    $filtered = count($block->getLayer()->getState()->getFilters());
     ?>
     <div class="block filter" id="layered-filter-block"
          data-mage-init='{"collapsible":{"openedState": "active", "collapsible": true, "active": false, "collateral": { "openedState": "filter-active", "element": "body" } }}'>
@@ -32,21 +32,27 @@
                 <img src="<?php echo $block->getViewFileUrl('images/loader-1.gif'); ?>" alt="Loading...">
             </div>
         </div>
-        <div class="block-title filter-title" data-count="<?php /* @escapeNotVerified */ echo $filtered; ?>">
-            <strong data-role="title"><?php /* @escapeNotVerified */ echo __('Shop By') ?></strong>
+        <div class="block-title filter-title" data-count="<?php /* @escapeNotVerified */
+        echo $filtered; ?>">
+            <strong data-role="title"><?php /* @escapeNotVerified */
+                echo __('Shop By') ?></strong>
         </div>
         <div class="block-content filter-content">
             <?php echo $block->getChildHtml('state') ?>
-            <?php if ($block->getLayer()->getState()->getFilters()): ?>
+            <?php if ($block->getLayer()->getState()->getFilters()) : ?>
                 <div class="block-actions filter-actions">
-                    <a href="<?php /* @escapeNotVerified */ echo $block->getClearUrl() ?>"
-                       class="action clear filter-clear"><span><?php /* @escapeNotVerified */ echo __('Clear All') ?></span></a>
+                    <a href="<?php /* @escapeNotVerified */
+                    echo $block->getClearUrl() ?>"
+                       class="action clear filter-clear"><span><?php /* @escapeNotVerified */
+                            echo __('Clear All') ?></span></a>
                 </div>
             <?php endif; ?>
             <?php $wrapOptions = false; ?>
-            <?php foreach ($filters as $key => $filter): ?>
-        <?php if ($filter->getItemsCount()): ?>
-        <?php if (!$wrapOptions): ?>
+            <?php foreach ($filters
+
+                           as $key => $filter) : ?>
+        <?php if ($filter->getItemsCount()) : ?>
+        <?php if (!$wrapOptions) : ?>
             <strong role="heading" aria-level="2"
                     class="block-subtitle filter-subtitle"><?php echo __('Shopping Options') ?></strong>
             <div class="filter-options" id="narrow-by-list" data-role="content">
@@ -54,14 +60,16 @@
                 endif; ?>
                 <div data-role="ln_collapsible" class="filter-options-item"
                      attribute="<?php echo $filter->getRequestVar() ?>">
-                    <div data-role="ln_title" class="filter-options-title"><?php /* @escapeNotVerified */ echo __($filter->getName()) ?></div>
-                    <div data-role="ln_content" class="filter-options-content"><?php /* @escapeNotVerified */ echo $block->getChildBlock('renderer')->setFilter($filter)->render($filter); ?></div>
+                    <div data-role="ln_title" class="filter-options-title"><?php /* @escapeNotVerified */
+                        echo __($filter->getName()) ?></div>
+                    <div data-role="ln_content" class="filter-options-content"><?php /* @escapeNotVerified */
+                        echo $block->getChildBlock('renderer')->setFilter($filter)->render($filter); ?></div>
                 </div>
                 <?php endif; ?>
                 <?php endforeach; ?>
-                <?php if ($wrapOptions): ?>
+                <?php if ($wrapOptions) : ?>
             </div>
-        <?php else: ?>
+        <?php else : ?>
             <script>
                 require([
                     'jquery'
@@ -77,6 +85,7 @@
                          "mpAjax": <?php echo $layerConfig ?>
                      }
                 }
+
             </script>
         </div>
     </div>
