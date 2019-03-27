@@ -21,13 +21,16 @@
 
 namespace Mageplaza\AjaxLayer\Plugin\Controller\Category;
 
+use Magento\Framework\Json\Helper\Data;
+use Mageplaza\AjaxLayer\Helper\Data as LayerData;
+
 /**
  * Class View
  * @package Mageplaza\LayeredNavigation\Controller\Plugin\Category
  */
 class View
 {
-    /** @var \Magento\Framework\Json\Helper\Data */
+    /** @var Data */
     protected $_jsonHelper;
 
     /** @var \Mageplaza\LayeredNavigation\Helper\Data */
@@ -36,12 +39,12 @@ class View
     /**
      * View constructor.
      *
-     * @param \Magento\Framework\Json\Helper\Data $jsonHelper
-     * @param \Mageplaza\AjaxLayer\Helper\Data $moduleHelper
+     * @param Data $jsonHelper
+     * @param LayerData $moduleHelper
      */
     public function __construct(
-        \Magento\Framework\Json\Helper\Data $jsonHelper,
-        \Mageplaza\AjaxLayer\Helper\Data $moduleHelper
+        Data $jsonHelper,
+        LayerData $moduleHelper
     ) {
         $this->_jsonHelper = $jsonHelper;
         $this->_moduleHelper = $moduleHelper;

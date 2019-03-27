@@ -18,11 +18,7 @@
  * @license     https://www.mageplaza.com/LICENSE.txt
  */
 
-define(
-    [
-        'jquery'
-    ],
-    function ($) {
+define(['jquery'], function ($) {
         'use strict';
 
         return {

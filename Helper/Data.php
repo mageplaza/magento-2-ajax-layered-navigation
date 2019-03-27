@@ -21,6 +21,8 @@
 
 namespace Mageplaza\AjaxLayer\Helper;
 
+use Magento\Customer\Model\Session;
+use Magento\Framework\DataObject;
 use Mageplaza\Core\Helper\AbstractData;
 
 /**
@@ -31,9 +33,6 @@ class Data extends AbstractData
 {
     const CONFIG_MODULE_PATH = 'layered_navigation';
     const FILTER_TYPE_LIST   = 'list';
-
-    /** @var \Mageplaza\LayeredNavigation\Model\Layer\Filter */
-    protected $filterModel;
 
     /**
      * @param null $storeId
@@ -53,10 +52,11 @@ class Data extends AbstractData
     public function getLayerConfiguration($filters)
     {
         $filterParams = $this->_getRequest()->getParams();
-        $config = new \Magento\Framework\DataObject([
+
+        $config = new DataObject([
             'active'             => array_keys($filterParams),
             'params'             => $filterParams,
-            'isCustomerLoggedIn' => $this->objectManager->create('Magento\Customer\Model\Session')->isLoggedIn()
+            'isCustomerLoggedIn' => $this->objectManager->create(Session::class)->isLoggedIn()
         ]);
 
         return self::jsonEncode($config->getData());
