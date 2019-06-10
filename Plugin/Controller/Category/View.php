@@ -30,10 +30,14 @@ use Mageplaza\AjaxLayer\Helper\Data as LayerData;
  */
 class View
 {
-    /** @var Data */
+    /**
+     * @var Data
+     */
     protected $_jsonHelper;
 
-    /** @var \Mageplaza\LayeredNavigation\Helper\Data */
+    /**
+     * @var LayerData
+     */
     protected $_moduleHelper;
 
     /**
@@ -60,10 +64,14 @@ class View
     {
         if ($this->_moduleHelper->ajaxEnabled() && $action->getRequest()->isAjax()) {
             $navigation = $page->getLayout()->getBlock('catalog.leftnav');
-            $products   = $page->getLayout()->getBlock('category.products');
+            $products = $page->getLayout()->getBlock('category.products');
             if ($this->_moduleHelper->getConfigValue('mpquickview/general/enabled')) {
                 $quickView = $page->getLayout()->getBlock('mpquickview.quickview');
-                $result    = ['products' => $products->toHtml(), 'navigation' => $navigation->toHtml(), 'quickview' => $quickView->toHtml()];
+                $result = [
+                    'products'   => $products->toHtml(),
+                    'navigation' => $navigation->toHtml(),
+                    'quickview'  => $quickView->toHtml()
+                ];
             } else {
                 $result = ['products' => $products->toHtml(), 'navigation' => $navigation->toHtml()];
             }

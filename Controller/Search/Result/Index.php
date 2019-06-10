@@ -55,7 +55,7 @@ class Index extends Action
     protected $_jsonHelper;
 
     /**
-     * @type \Mageplaza\LayeredNavigation\Helper\Data
+     * @var HelperData
      */
     protected $_moduleHelper;
 
@@ -98,13 +98,13 @@ class Index extends Action
         JsonData $jsonHelper,
         HelperData $moduleHelper
     ) {
-        $this->_storeManager   = $storeManager;
+        $this->_storeManager = $storeManager;
         $this->_catalogSession = $catalogSession;
-        $this->_queryFactory   = $queryFactory;
-        $this->layerResolver   = $layerResolver;
-        $this->_jsonHelper     = $jsonHelper;
-        $this->_moduleHelper   = $moduleHelper;
-        $this->_helper         = $helper;
+        $this->_queryFactory = $queryFactory;
+        $this->layerResolver = $layerResolver;
+        $this->_jsonHelper = $jsonHelper;
+        $this->_moduleHelper = $moduleHelper;
+        $this->_helper = $helper;
 
         parent::__construct($context);
     }
@@ -126,7 +126,6 @@ class Index extends Action
                 $query->setId(0)->setIsActive(1)->setIsProcessed(1);
             } else {
                 $query->saveIncrementalPopularity();
-
                 if ($query->getRedirect()) {
                     $this->getResponse()->setRedirect($query->getRedirect());
 
@@ -139,8 +138,8 @@ class Index extends Action
 
             if ($this->_moduleHelper->ajaxEnabled() && $this->getRequest()->isAjax()) {
                 $navigation = $this->_view->getLayout()->getBlock('catalogsearch.leftnav');
-                $products   = $this->_view->getLayout()->getBlock('search.result');
-                $result     = [
+                $products = $this->_view->getLayout()->getBlock('search.result');
+                $result = [
                     'products'   => $products->toHtml(),
                     'navigation' => $navigation->toHtml()
                 ];
