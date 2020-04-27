@@ -104,6 +104,19 @@ define([
         initObserve: function () {
             var self = this;
 
+            // fix browser back, forward button
+            if (typeof window.history.replaceState === "function") {
+                window.history.replaceState({url: document.URL}, document.title);
+
+                setTimeout(function () {
+                    window.onpopstate = function (e) {
+                        if (e.state) {
+                            submitFilterAction(e.state.url, 1);
+                        }
+                    };
+                }, 0)
+            }
+
             var pageElements = $('#layer-product-list').find('.pages a');
             pageElements.each(function () {
                 var el = $(this),

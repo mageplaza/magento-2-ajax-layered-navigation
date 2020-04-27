@@ -26,7 +26,11 @@ use Magento\Catalog\Model\Session;
 use Magento\CatalogSearch\Helper\Data;
 use Magento\Framework\App\Action\Action;
 use Magento\Framework\App\Action\Context;
+use Magento\Framework\App\ResponseInterface;
+use Magento\Framework\Controller\ResultInterface;
+use Magento\Framework\Exception\LocalizedException;
 use Magento\Framework\Json\Helper\Data as JsonData;
+use Magento\Search\Model\Query;
 use Magento\Search\Model\QueryFactory;
 use Magento\Store\Model\StoreManagerInterface;
 use Mageplaza\AjaxLayer\Helper\Data as HelperData;
@@ -98,25 +102,25 @@ class Index extends Action
         JsonData $jsonHelper,
         HelperData $moduleHelper
     ) {
-        $this->_storeManager = $storeManager;
+        $this->_storeManager   = $storeManager;
         $this->_catalogSession = $catalogSession;
-        $this->_queryFactory = $queryFactory;
-        $this->layerResolver = $layerResolver;
-        $this->_jsonHelper = $jsonHelper;
-        $this->_moduleHelper = $moduleHelper;
-        $this->_helper = $helper;
+        $this->_queryFactory   = $queryFactory;
+        $this->layerResolver   = $layerResolver;
+        $this->_jsonHelper     = $jsonHelper;
+        $this->_moduleHelper   = $moduleHelper;
+        $this->_helper         = $helper;
 
         parent::__construct($context);
     }
 
     /**
-     * @return \Magento\Framework\App\ResponseInterface|\Magento\Framework\Controller\ResultInterface|void
-     * @throws \Magento\Framework\Exception\LocalizedException
+     * @return ResponseInterface|ResultInterface|void
+     * @throws LocalizedException
      */
     public function execute()
     {
         $this->layerResolver->create(Resolver::CATALOG_LAYER_SEARCH);
-        /* @var $query \Magento\Search\Model\Query */
+        /* @var $query Query */
         $query = $this->_queryFactory->get();
 
         $query->setStoreId($this->_storeManager->getStore()->getId());
@@ -138,8 +142,8 @@ class Index extends Action
 
             if ($this->_moduleHelper->ajaxEnabled() && $this->getRequest()->isAjax()) {
                 $navigation = $this->_view->getLayout()->getBlock('catalogsearch.leftnav');
-                $products = $this->_view->getLayout()->getBlock('search.result');
-                $result = [
+                $products   = $this->_view->getLayout()->getBlock('search.result');
+                $result     = [
                     'products'   => $products->toHtml(),
                     'navigation' => $navigation->toHtml()
                 ];
