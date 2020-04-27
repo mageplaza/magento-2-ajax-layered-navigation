@@ -50,7 +50,7 @@ class View
         Data $jsonHelper,
         LayerData $moduleHelper
     ) {
-        $this->_jsonHelper = $jsonHelper;
+        $this->_jsonHelper   = $jsonHelper;
         $this->_moduleHelper = $moduleHelper;
     }
 
@@ -64,10 +64,10 @@ class View
     {
         if ($this->_moduleHelper->ajaxEnabled() && $action->getRequest()->isAjax()) {
             $navigation = $page->getLayout()->getBlock('catalog.leftnav');
-            $products = $page->getLayout()->getBlock('category.products');
+            $products   = $page->getLayout()->getBlock('category.products');
             if ($this->_moduleHelper->getConfigValue('mpquickview/general/enabled')) {
                 $quickView = $page->getLayout()->getBlock('mpquickview.quickview');
-                $result = [
+                $result    = [
                     'products'   => $products->toHtml(),
                     'navigation' => $navigation->toHtml(),
                     'quickview'  => $quickView->toHtml()
