@@ -50,7 +50,13 @@ define(
                 window.history.pushState({url: submitUrl}, '', submitUrl);
             }
 
-            return storage.post(submitUrl, JSON.stringify({'mp_layer': 1})).done(
+            if (typeof isChangeUrl === 'object'){
+                var data = '{}';
+            }else{
+                var data = JSON.stringify({'mp_layer': 1});
+            }
+
+            return storage.post(submitUrl, data).done(
                 function (response) {
                     if (response.backUrl) {
                         window.location = response.backUrl;
