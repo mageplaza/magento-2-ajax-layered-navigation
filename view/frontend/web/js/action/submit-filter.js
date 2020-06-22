@@ -34,7 +34,8 @@ define(
 
         return function (submitUrl, isChangeUrl) {
             /** save active state */
-            var actives = [];
+            var actives = [],
+                data;
             $('.filter-options-item').each(function (index) {
                 if ($(this).hasClass('active')) {
                     actives.push($(this).attr('attribute'));
@@ -50,10 +51,10 @@ define(
                 window.history.pushState({url: submitUrl}, '', submitUrl);
             }
 
-            if (typeof isChangeUrl === 'object'){
-                var data = '{}';
+            if (isChangeUrl){
+                data = '{}';
             }else{
-                var data = JSON.stringify({'mp_layer': 1});
+                data = JSON.stringify({'mp_layer': 1});
             }
 
             return storage.post(submitUrl, data).done(
