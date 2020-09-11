@@ -22,7 +22,7 @@ define([
     'jquery',
     'Mageplaza_AjaxLayer/js/action/submit-filter',
     'Magento_Catalog/js/price-utils',
-    'jquery/ui',
+    'jquery-ui-modules/widget',
     'accordion',
     'productListToolbarForm'
 ], function ($, submitFilterAction, ultil) {
