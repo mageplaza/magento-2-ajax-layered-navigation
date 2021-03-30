@@ -51,7 +51,14 @@ class Data extends AbstractData
      */
     public function getLayerConfiguration($filters)
     {
-        $filterParams = $this->_getRequest()->getParams();
+        $params       = $this->_getRequest()->getParams();
+        $filterParams = [];
+        foreach ($params as $key => $param) {
+            if ($key === 'amp;dimbaar') {
+                continue;
+            }
+            $filterParams[htmlentities($key)] = htmlentities($param);
+        }
 
         $config = new DataObject([
             'active'             => array_keys($filterParams),
