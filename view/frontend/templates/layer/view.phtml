@@ -79,7 +79,7 @@
             <script type="text/x-magento-init">
                 {
                      ".block-content.filter-content":{
-                         "mpAjax": <?= /** @noEscape */ $layerConfig ?>
+                         "mpAjax": <?= /** @noEscape */ $block->escapeJs($layerConfig) ?>
                      }
                 }
             </script>
