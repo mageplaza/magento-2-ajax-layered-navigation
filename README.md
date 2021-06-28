@@ -69,7 +69,7 @@ Even when shopper performs multi-filtering, Ajax Layered still supports to displ
 The Ajax Layered Navigation tutorial of Mageplaza below will provide detailed instruction on how to use for user interface and how to configure on the admin backend.
 
 
-### How to Config M2 Ajax Layered Navigation
+### How to Config Magento 2 Ajax Layered Navigation
 
 From the admin panel, make your way to ``Mageplaza > Layered Navigation > Configuration``
 
@@ -110,8 +110,18 @@ After clicking on Add to wishlist icon on Category Page, customers can continue 
 - [Magento 2 GeoIP](https://github.com/mageplaza/magento-2-geoip)
 
 
-
-
+**Explore more [Magento 2 extensions on Marketplace](https://marketplace.magento.com/partner/Mageplaza):**
+- [Magento 2 Layered Navigation](https://marketplace.magento.com/mageplaza-layered-navigation-m2.html)
+- [Magento 2 One Step Checkout](https://marketplace.magento.com/mageplaza-magento-2-one-step-checkout-extension.html)
+- [Magento 2 PDF invoice](https://marketplace.magento.com/mageplaza-module-pdf-invoice.html)
+- [Magento 2 Automatic Related Products](https://marketplace.magento.com/mageplaza-module-automatic-related-products.html)
+- [Magento 2 All in one](https://marketplace.magento.com/mageplaza-magento-2-seo-extension.html)
+- [Magento 2 Gift Card](https://marketplace.magento.com/mageplaza-module-gift-card.html)
+- [Magento 2 Reward Points extension](https://marketplace.magento.com/mageplaza-module-reward-points.html)
+- [Magento 2 Affiliate Program](https://marketplace.magento.com/mageplaza-module-affiliate.html)
+- [Magento 2 Product Feed](https://marketplace.magento.com/mageplaza-module-product-feed.html)
+- [Magento 2 Mass Product Actions](https://marketplace.magento.com/mageplaza-module-mass-product-actions.html)
+- [Magento 2 Custom Stock Status](https://marketplace.magento.com/mageplaza-module-custom-stock-status.html)
 
 
 
