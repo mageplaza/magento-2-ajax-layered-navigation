@@ -214,15 +214,14 @@ define([
                 var el = $(this);
                 $(el).bind('click', function (e) {
                     var dataPost = $(el).data('post'),
-                        formKey = $('input[name="form_key"]').val();
+                        formKey = $('input[name="form_key"]').val(), method = 'post';
                     if (formKey) {
                         dataPost.data.form_key = formKey;
                     }
 
                     var paramData = $.param(dataPost.data),
                         url = dataPost.action + (paramData.length ? '?' + paramData : '');
-
-                    submitFilterAction(url, true);
+                    submitFilterAction(url, true, method);
                     e.stopPropagation();
                     e.preventDefault();
                 });
