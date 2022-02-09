@@ -32,7 +32,7 @@ define(
             layerContainer = $('.layered-filter-block-container'),
             quickViewContainer = $('#mpquickview-popup');
 
-        return function (submitUrl, isChangeUrl) {
+        return function (submitUrl, isChangeUrl, method) {
             /** save active state */
             var actives = [],
                 data;
@@ -49,6 +49,16 @@ define(
             /** change browser url */
             if (typeof window.history.pushState === 'function' && (typeof isChangeUrl === 'undefined')) {
                 window.history.pushState({url: submitUrl}, '', submitUrl);
+            }
+            if (method === 'post') {// For 'add to wishlist' & 'add to compare' event
+                return storage.post(submitUrl).done(
+                ).fail(
+                    function () {
+                        window.location.reload();
+                    }
+                ).always(function () {
+                    loader.stopLoader();
+                });
             }
 
             return storage.get(submitUrl).done(
