@@ -23,13 +23,14 @@ define(
         'jquery',
         'mage/storage',
         'Mageplaza_AjaxLayer/js/model/loader',
-        'mage/apply/main'
+        'mage/apply/main',
+        'ko'
     ],
-    function ($, storage, loader, mage) {
+    function ($, storage, loader, mage, ko) {
         'use strict';
 
-        var productContainer = $('#layer-product-list'),
-            layerContainer = $('.layered-filter-block-container'),
+        var productContainer   = $('#layer-product-list'),
+            layerContainer     = $('.layered-filter-block-container'),
             quickViewContainer = $('#mpquickview-popup');
 
         return function (submitUrl, isChangeUrl) {
@@ -66,6 +67,9 @@ define(
                     if (response.quickview) {
                         quickViewContainer.html(response.quickview);
                     }
+
+                    ko.cleanNode(productContainer[0]);
+                    productContainer.applyBindings();
 
                     if (mage) {
                         mage.apply();
