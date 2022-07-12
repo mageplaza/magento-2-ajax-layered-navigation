@@ -49,8 +49,8 @@ define(
 
             /** fix load page FPC */
             let urlTmp = new URL(submitUrl);
-            if(url.searchParams.get('mpLayer')){
-                url.searchParams.delete('mpLayer');
+            if(urlTmp.searchParams.get('mpLayer')){
+                urlTmp.searchParams.delete('mpLayer');
             }
              /** change browser url */
             if (typeof window.history.pushState === 'function' && (typeof isChangeUrl === 'undefined')) {
