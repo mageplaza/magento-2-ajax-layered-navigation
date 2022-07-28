@@ -47,16 +47,10 @@ define(
             /** start loader */
             loader.startLoader();
 
-            /** fix load page FPC */
-            let urlTmp = new URL(submitUrl);
-            if(urlTmp.searchParams.get('mpLayer')){
-                urlTmp.searchParams.delete('mpLayer');
-            }
-             /** change browser url */
+            /** change browser url */
             if (typeof window.history.pushState === 'function' && (typeof isChangeUrl === 'undefined')) {
-                window.history.pushState({url: submitUrl}, '', urlTmp);
+                window.history.pushState({url: submitUrl}, '', submitUrl);
             }
-
             if (method === 'post') {// For 'add to wishlist' & 'add to compare' event
                 return storage.post(submitUrl).done(
                 ).fail(
@@ -68,7 +62,7 @@ define(
                 });
             }
 
-            return $.get({url:submitUrl, cache:true}, {'mpLayer': 1}).done(
+            return storage.get(submitUrl).done(
                 function (response) {
                     if (response.backUrl) {
                         window.location = response.backUrl;
