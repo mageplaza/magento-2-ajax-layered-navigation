@@ -125,13 +125,6 @@ define([
                     return;
                 }
 
-                //fix FPC load page
-                let urlTmp = new URL(link);
-                if(urlTmp.searchParams.get('mpLayer')){
-                    urlTmp.searchParams.delete('mpLayer');
-                }
-                $(el).attr("href",urlTmp.href);
-
                 el.bind('click', function (e) {
                     submitFilterAction(link);
                     e.stopPropagation();
