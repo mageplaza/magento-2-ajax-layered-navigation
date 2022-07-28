@@ -130,8 +130,8 @@ define([
                 if(urlTmp.searchParams.get('mpLayer')){
                     urlTmp.searchParams.delete('mpLayer');
                 }
-                $(el).attr("href",urlTmp.href)
-                
+                $(el).attr("href",urlTmp.href);
+
                 el.bind('click', function (e) {
                     submitFilterAction(link);
                     e.stopPropagation();
