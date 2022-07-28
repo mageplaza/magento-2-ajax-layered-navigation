@@ -48,15 +48,13 @@ define(
             loader.startLoader();
 
             /** fix load page FPC */
-            const url = new URL(window.location);
-            url.href = submitUrl;
-            if(url.searchParams.get('mpLayer')){
-                url.searchParams.delete('mpLayer');
-                window.history.pushState({}, '', url);
+            let urlTmp = new URL(submitUrl);
+            if(urlTmp.searchParams.get('mpLayer')){
+                urlTmp.searchParams.delete('mpLayer');
             }
              /** change browser url */
             if (typeof window.history.pushState === 'function' && (typeof isChangeUrl === 'undefined')) {
-                window.history.pushState({url: submitUrl}, '', url.href);
+                window.history.pushState({url: submitUrl}, '', urlTmp);
             }
 
             if (method === 'post') {// For 'add to wishlist' & 'add to compare' event
@@ -70,7 +68,7 @@ define(
                 });
             }
 
-            return $.get({url:submitUrl,cache:true},{'mpLayer': 1}).done(
+            return $.get({url:submitUrl, cache:true}, {'mpLayer': 1}).done(
                 function (response) {
                     if (response.backUrl) {
                         window.location = response.backUrl;
