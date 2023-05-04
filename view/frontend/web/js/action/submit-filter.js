@@ -77,6 +77,9 @@ define(
                     if (response.quickview) {
                         quickViewContainer.html(response.quickview);
                     }
+                    if (response.finder) {
+                        $('.mpproductfinder-block').html(response.finder);
+                    }
 
                     ko.cleanNode(productContainer[0]);
                     productContainer.applyBindings();
