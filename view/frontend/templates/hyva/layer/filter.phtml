@@ -1,0 +1,118 @@
+<?php
+/**
+ * Hyvä Themes - https://hyva.io
+ * Copyright © Hyvä Themes 2020-present. All rights reserved.
+ * This product is licensed per Magento install
+ * See https://hyva.io/license
+ */
+
+declare(strict_types=1);
+
+use Hyva\Theme\Model\LocaleFormatter;
+use Magento\Catalog\Helper\Data;
+use Magento\Framework\Escaper;
+use Magento\LayeredNavigation\Block\Navigation\FilterRenderer;
+
+// phpcs:disable Magento2.Templates.ThisInTemplate.FoundThis
+// phpcs:disable Magento2.Templates.ThisInTemplate.FoundHelper
+
+/** @var FilterRenderer $block */
+/** @var Escaper $escaper */
+/** @var LocaleFormatter $localeFormatter */
+
+$catalogHelper = $this->helper(Data::class);
+
+/** @var array $filterItems */
+?>
+
+<ol x-data="{ products: '', navigation: '' }" class="items" aria-label="<?= $escaper->escapeHtmlAttr(__('%1 filter options', $block->getFilterTitle())) ?>">
+    <?php foreach ($filterItems as $filterItem): ?>
+        <li>
+            <?php if ($filterItem->getCount() > 0): ?>
+                <a onClick="handleClickLink('<?= $escaper->escapeUrl($filterItem->getUrl()) ?>')"
+                   href="<?= $escaper->escapeUrl($filterItem->getUrl()) ?>"
+                   class="flex justify-between py-1 hover:text-black"
+                    <?php if ((int) $filterItem->getCount() === 1): ?>
+                        aria-label="<?= $escaper->escapeHtmlAttr(__('%1 filter, 1 available product',
+                            $filterItem->getLabel())) ?>"
+                    <?php else: ?>
+                        aria-label="<?= $escaper->escapeHtmlAttr(__('%1 filter, %2 available products',
+                            $filterItem->getLabel(), $filterItem->getCount())) ?>"
+                    <?php endif; ?>
+
+                >
+                    <span><?= /* @noEscape */
+                        $filterItem->getLabel() ?></span>
+                    <?php if ($catalogHelper->shouldDisplayProductCountOnLayer()): ?>
+                        <span class="count text-primary">(<?= /* @noEscape */
+                            $localeFormatter->formatNumber((int) $filterItem->getCount()) ?>)</span>
+                    <?php endif; ?>
+                </a>
+            <?php else: ?>
+                <span class="flex justify-between py-1 hover:text-black">
+                    <span><?= /* @noEscape */
+                        $filterItem->getLabel() ?></span>
+                <?php if ($catalogHelper->shouldDisplayProductCountOnLayer()): ?>
+                    <span class="count text-primary">(<?= /* @noEscape */
+                        $localeFormatter->formatNumber((int) $filterItem->getCount()) ?>)</span>
+                <?php endif; ?>
+            </span>
+            <?php endif; ?>
+        </li>
+    <?php endforeach ?>
+</ol>
+
+<script>
+
+    function handleClickLink (link) {
+        event.preventDefault();
+        appendLoading();
+        fetch(link, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-Requested-With': 'XMLHttpRequest'
+                }
+            }
+        ).then(response => {
+                return response.json();
+            }
+        ).then(data => {
+            let productContainer = document.querySelector('#layer-product-list');
+            let layerContainer   = document.querySelector('.layered-filter-block-container');
+            if (productContainer) {
+                hyva.replaceDomElement('#product-list',data.products)
+            }
+            if (layerContainer) {
+                layerContainer.innerHTML = data.navigation;
+
+            }
+
+            window.history.pushState({url: link}, '', link);
+
+            removeLoading();
+
+        }).catch(error => {
+            removeLoading();
+        });
+
+
+    }
+
+    function appendLoading () {
+        var block = document.querySelector(".ln_overlay");
+        if (block) {
+            block.style.display = 'block';
+        }
+    }
+
+    function removeLoading () {
+        var block = document.querySelector(".ln_overlay");
+
+        if (block) {
+            block.style.display = 'none';
+
+        }
+    }
+
+</script>

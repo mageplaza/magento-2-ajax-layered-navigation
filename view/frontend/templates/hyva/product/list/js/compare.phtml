@@ -1,0 +1,55 @@
+<?php
+/**
+ * Hyvä Themes - https://hyva.io
+ * Copyright © Hyvä Themes 2020-present. All rights reserved.
+ * This product is licensed per Magento install
+ * See https://hyva.io/license
+ */
+
+use Hyva\Theme\Model\ViewModelRegistry;
+use Hyva\Theme\ViewModel\ProductCompare;
+use Hyva\Theme\ViewModel\Wishlist;
+use Magento\Framework\Escaper;
+
+/** @var ViewModelRegistry $viewModels */
+/** @var Escaper $escaper */
+
+/** @var ProductCompare $compareViewModel */
+$compareViewModel = $viewModels->require(ProductCompare::class);
+?>
+<?php if ($compareViewModel->showInProductList()): ?>
+    <script>
+        function initCompareOnProductList() {
+            return {
+                addToCompare(productId) {
+                    const formKey = hyva.getFormKey();
+                    const postUrl = BASE_URL + 'catalog/product_compare/add/';
+                    appendLoading();
+                    fetch(postUrl, {
+                        "headers": {
+                            "content-type": "application/x-www-form-urlencoded; charset=UTF-8",
+                        },
+                        "body": "form_key=" + formKey + "&product=" + productId + "&uenc=" + hyva.getUenc(),
+                        "method": "POST",
+                        "mode": "cors",
+                        "credentials": "include"
+                    }).then(function (response) {
+                        if (response.redirected) {
+                            const reloadCustomerDataEvent = new CustomEvent("reload-customer-section-data");
+                            window.dispatchEvent(reloadCustomerDataEvent);
+                        }
+                        removeLoading();
+                    }).catch(function (error) {
+                        typeof window.dispatchMessages !== "undefined" && window.dispatchMessages(
+                            [{
+                                type: "error",
+                                text: error
+                            }], 5000
+                        );
+                        removeLoading();
+                    });
+                }
+            };
+        }
+    </script>
+<?php endif; ?>
