@@ -79,13 +79,13 @@ $catalogHelper = $this->helper(Data::class);
             }
         ).then(data => {
             let productContainer = document.querySelector('#layer-product-list');
-            let layerContainer   = document.querySelector('.layered-filter-block-container');
+            let layerContainer   = document.querySelector('#layered-filter-block-container');
             if (productContainer) {
                 hyva.replaceDomElement('#product-list',data.products)
             }
-            if (layerContainer) {
-                layerContainer.innerHTML = data.navigation;
 
+            if (layerContainer) {
+                hyva.replaceDomElement('#layered-navigation-hyva',data.navigation)
             }
 
             window.history.pushState({url: link}, '', link);

@@ -12,7 +12,7 @@
     <update handle="catalog_list_item"/>
     <body>
         <referenceBlock name="product_list_toolbar">
-            <action method="setTemplate">
+            <action method="setTemplate" ifconfig="layered_navigation/general/ajax_enable">
                 <argument name="template" xsi:type="string">Mageplaza_AjaxLayer::hyva/product/list/toolbar.phtml</argument>
             </action>
         </referenceBlock>

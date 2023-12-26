@@ -23,12 +23,12 @@
 <page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
     <body>
         <referenceBlock name="category.products.list.js.compare">
-            <action method="setTemplate" >
+            <action method="setTemplate" ifconfig="layered_navigation/general/ajax_enable">
                 <argument name="template" xsi:type="string">Mageplaza_AjaxLayer::hyva/product/list/js/compare.phtml</argument>
             </action>
         </referenceBlock>
         <referenceBlock name="category.products.list.js.wishlist">
-            <action method="setTemplate" >
+            <action method="setTemplate" ifconfig="layered_navigation/general/ajax_enable">
                 <argument name="template" xsi:type="string">Mageplaza_AjaxLayer::hyva/product/list/js/wishlist.phtml</argument>
             </action>
         </referenceBlock>

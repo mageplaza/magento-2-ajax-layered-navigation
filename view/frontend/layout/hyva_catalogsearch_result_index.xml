@@ -32,13 +32,13 @@
         </referenceBlock>
 
         <referenceBlock name="catalog.navigation.renderer">
-            <action method="setTemplate" >
+            <action method="setTemplate" ifconfig="layered_navigation/general/ajax_enable">
                 <argument name="template" xsi:type="string">Mageplaza_AjaxLayer::hyva/layer/filter.phtml</argument>
             </action>
         </referenceBlock>
 
         <referenceBlock name="catalog.navigation.state">
-            <action method="setTemplate" >
+            <action method="setTemplate" ifconfig="layered_navigation/general/ajax_enable">
                 <argument name="template" xsi:type="string">Mageplaza_AjaxLayer::hyva/layer/state.phtml</argument>
             </action>
         </referenceBlock>
