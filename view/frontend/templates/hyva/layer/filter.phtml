@@ -62,17 +62,19 @@ $catalogHelper = $this->helper(Data::class);
     <?php endforeach ?>
 </ol>
 
-<script>
+<script >
 
     function handleClickLink (link) {
         event.preventDefault();
         appendLoading();
-        fetch(link, {
+        let newLink= addTimestampToURL(link);
+        window.history.pushState({url: link}, '', link);
+        fetch(newLink, {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',
-                    'X-Requested-With': 'XMLHttpRequest'
-                }
+                    'X-Requested-With': 'XMLHttpRequest',
+                },
             }
         ).then(response => {
                 return response.json();
@@ -88,7 +90,6 @@ $catalogHelper = $this->helper(Data::class);
                 hyva.replaceDomElement('#layered-navigation-hyva',data.navigation)
             }
 
-            window.history.pushState({url: link}, '', link);
 
             removeLoading();
 
@@ -97,6 +98,20 @@ $catalogHelper = $this->helper(Data::class);
         });
 
 
+
+    }
+
+    function addTimestampToURL(originalURL) {
+        // Get the current timestamp
+        var timestamp = new Date().getTime();
+
+        // Check if the original URL already contains a query parameter
+        var separator = originalURL.includes('?') ? '&' : '?';
+
+        // Append the timestamp as a query parameter
+        var modifiedURL = originalURL + separator + '_=' + timestamp;
+
+        return modifiedURL;
     }
 
     function appendLoading () {
