@@ -35,7 +35,8 @@ $heroicons = $viewModels->require(HeroiconsOutline::class);
     >
         <div id="ln_overlay" class="ln_overlay">
             <div class="loader">
-                <img src="<?= /** @noEscape */ $block->getViewFileUrl('images/loader-1.gif') ?>" alt="Loading...">
+                <img src="<?= /** @noEscape */
+                $block->getViewFileUrl('images/loader-1.gif') ?>" alt="Loading...">
             </div>
         </div>
         <h2
@@ -123,6 +124,7 @@ $heroicons = $viewModels->require(HeroiconsOutline::class);
                             <div
                                     :id="`${id}-content`"
                                     class="filter-options-content pt-3"
+                                    x-init="handleContentInitialization"
                             >
                                 <?= /* @noEscape */
                                 $block->getChildBlock('renderer')->setFilterTitle($filter->getName())->render($filter); ?>
@@ -140,9 +142,18 @@ $heroicons = $viewModels->require(HeroiconsOutline::class);
                 blockOpen: false,
                 checkIsMobileResolution () {
                     this.isMobile = window.matchMedia('(max-width: 767px)').matches;
+                },
+                handleContentInitialization() {
+                    let links = document.querySelectorAll('.filter-options-content a');
+                    links.forEach((link) => {
+                        link.addEventListener('click',(e)=>{
+                            e.preventDefault();
+                            handleClickLink(link.href);
+                        })
+                    })
                 }
+
             }
         }
-
     </script>
 <?php endif; ?>

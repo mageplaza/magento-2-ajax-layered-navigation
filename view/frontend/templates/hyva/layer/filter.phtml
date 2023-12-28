@@ -29,8 +29,7 @@ $catalogHelper = $this->helper(Data::class);
     <?php foreach ($filterItems as $filterItem): ?>
         <li>
             <?php if ($filterItem->getCount() > 0): ?>
-                <a onClick="handleClickLink('<?= $escaper->escapeUrl($filterItem->getUrl()) ?>')"
-                   href="<?= $escaper->escapeUrl($filterItem->getUrl()) ?>"
+                <a href="<?= $escaper->escapeUrl($filterItem->getUrl()) ?>"
                    class="flex justify-between py-1 hover:text-black"
                     <?php if ((int) $filterItem->getCount() === 1): ?>
                         aria-label="<?= $escaper->escapeHtmlAttr(__('%1 filter, 1 available product',
