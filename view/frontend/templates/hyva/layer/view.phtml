@@ -13,7 +13,6 @@ use Hyva\Theme\ViewModel\HeroiconsOutline;
 use Magento\Framework\Escaper;
 use Magento\LayeredNavigation\Block\Navigation;
 
-// phpcs:disable Generic.Files.LineLength.TooLong
 
 /** @var Navigation $block */
 /** @var Escaper $escaper */
@@ -152,6 +151,73 @@ $heroicons = $viewModels->require(HeroiconsOutline::class);
                         })
                     })
                 }
+
+            }
+        }
+
+        function handleClickLink (link) {
+
+            event.preventDefault();
+            appendLoading();
+            let newLink= addTimestampToURL(link);
+            window.history.pushState({url: link}, '', link);
+            fetch(newLink, {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-Requested-With': 'XMLHttpRequest',
+                    },
+                }
+            ).then(response => {
+                    return response.json();
+                }
+            ).then(data => {
+                let productContainer = document.querySelector('#layer-product-list');
+                let layerContainer   = document.querySelector('#layered-filter-block-container');
+                if (productContainer) {
+                    hyva.replaceDomElement('#product-list',data.products)
+                }
+
+                if (layerContainer) {
+                    hyva.replaceDomElement('#layered-navigation-hyva',data.navigation)
+                }
+
+
+                removeLoading();
+
+            }).catch(error => {
+                removeLoading();
+            });
+
+
+
+        }
+
+        function addTimestampToURL(originalURL) {
+            // Get the current timestamp
+            var timestamp = new Date().getTime();
+
+            // Check if the original URL already contains a query parameter
+            var separator = originalURL.includes('?') ? '&' : '?';
+
+            // Append the timestamp as a query parameter
+            var modifiedURL = originalURL + separator + '_=' + timestamp;
+
+            return modifiedURL;
+        }
+
+        function appendLoading () {
+            var block = document.querySelector(".ln_overlay");
+            if (block) {
+                block.style.display = 'block';
+            }
+        }
+
+        function removeLoading () {
+            var block = document.querySelector(".ln_overlay");
+
+            if (block) {
+                block.style.display = 'none';
 
             }
         }

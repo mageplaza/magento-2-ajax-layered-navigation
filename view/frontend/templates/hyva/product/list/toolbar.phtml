@@ -1,9 +1,22 @@
 <?php
 /**
- * Hyvä Themes - https://hyva.io
- * Copyright © Hyvä Themes 2020-present. All rights reserved.
- * This product is licensed per Magento install
- * See https://hyva.io/license
+ * Mageplaza
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Mageplaza.com license that is
+ * available through the world-wide-web at this URL:
+ * https://www.mageplaza.com/LICENSE.txt
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade this extension to newer
+ * version in the future.
+ *
+ * @category    Mageplaza
+ * @package     Mageplaza_AjaxLayer
+ * @copyright   Copyright (c) Mageplaza (http://www.mageplaza.com/)
+ * @license     https://www.mageplaza.com/LICENSE.txt
  */
 
 declare(strict_types=1);
@@ -76,7 +89,10 @@ $additionalOptions = ['page' => 'p'];
                         ? ''
                         : '?' + (new URLSearchParams(paramData));
                     appendLoading();
-                    fetch(baseUrl + paramData, {
+                    let link = baseUrl + paramData;
+                    let newLink= addTimestampToURL(link);
+                    window.history.pushState({url: link}, '', link);
+                    fetch(newLink, {
                             method: 'GET',
                             headers: {
                                 'Content-Type': 'application/json',
@@ -87,16 +103,21 @@ $additionalOptions = ['page' => 'p'];
                             return response.json();
                         }
                     ).then(data => {
-                        let layerContainer = document.querySelector('.layered-filter-block-container');
-                        hyva.replaceDomElement('#product-list', data.products);
-                        if (layerContainer) {
-                            layerContainer.innerHTML = data.navigation;
+                        let productContainer = document.querySelector('#layer-product-list');
+                        let layerContainer   = document.querySelector('#layered-filter-block-container');
+                        if (productContainer) {
+                            hyva.replaceDomElement('#product-list',data.products)
                         }
+
+                        if (layerContainer) {
+                            hyva.replaceDomElement('#layered-navigation-hyva',data.navigation)
+                        }
+
                         window.history.pushState({url: link}, '', link);
                         removeLoading();
 
                     }).catch(error => {
-                        // location.href = baseUrl + paramData;
+                        location.href = baseUrl + paramData;
                         removeLoading();
                     });
                 }
