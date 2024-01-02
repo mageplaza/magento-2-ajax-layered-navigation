@@ -55,7 +55,6 @@ $wishlistViewModel = $viewModels->require(Wishlist::class);
                     }).then(function (response) {
                         let layerConfig = <?= $layerConfig ?>;
 
-
                         if (response.redirected) {
                             if(!layerConfig?.isCustomerLoggedIn) {
                                 window.location.href = response.url;
