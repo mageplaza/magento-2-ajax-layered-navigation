@@ -25,6 +25,7 @@
         <sequence>
             <module name="Magento_Catalog"/>
             <module name="Mageplaza_Core"/>
+            <module name="Mageplaza_SeoUrl"/>
         </sequence>
     </module>
 </config>

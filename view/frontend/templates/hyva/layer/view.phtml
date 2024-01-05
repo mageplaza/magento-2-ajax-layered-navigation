@@ -1,0 +1,238 @@
+<?php
+/**
+ * Mageplaza
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Mageplaza.com license that is
+ * available through the world-wide-web at this URL:
+ * https://www.mageplaza.com/LICENSE.txt
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade this extension to newer
+ * version in the future.
+ *
+ * @category    Mageplaza
+ * @package     Mageplaza_AjaxLayer
+ * @copyright   Copyright (c) Mageplaza (http://www.mageplaza.com/)
+ * @license     https://www.mageplaza.com/LICENSE.txt
+ */
+
+declare(strict_types=1);
+
+use Hyva\Theme\Model\ViewModelRegistry;
+use Hyva\Theme\ViewModel\HeroiconsOutline;
+use Magento\Framework\Escaper;
+use Magento\LayeredNavigation\Block\Navigation;
+
+
+/** @var Navigation $block */
+/** @var Escaper $escaper */
+/** @var ViewModelRegistry $viewModels */
+
+/** @var HeroiconsOutline $heroicons */
+$heroicons = $viewModels->require(HeroiconsOutline::class);
+?>
+<?php if ($block->canShowBlock()): ?>
+    <div
+            x-data="initLayeredNavigation()"
+            x-init="checkIsMobileResolution()"
+            @resize.window.debounce="checkIsMobileResolution()"
+            @visibilitychange.window.debounce="checkIsMobileResolution()"
+            class="block border border-container bg-container-darker p-4 md:border-0 md:bg-transparent md:py-0 md:px-0 my-6"
+            role="region"
+            id="layered-navigation-hyva"
+            aria-label="<?= $escaper->escapeHtmlAttr(__('Product filters')) ?>"
+    >
+        <div id="ln_overlay" class="ln_overlay">
+            <div class="loader">
+                <img src="<?= /** @noEscape */
+                $block->getViewFileUrl('images/loader-1.gif') ?>" alt="Loading...">
+            </div>
+        </div>
+        <h2
+                id="filters-heading"
+                class="block-title"
+        >
+            <button
+                    type="button"
+                    @click="blockOpen = !blockOpen"
+                    class="block-title flex items-center justify-between w-full text-start"
+                    aria-controls="filters-content"
+                    :aria-expanded="blockOpen"
+                    :aria-disabled="!isMobile"
+                    :disabled="!isMobile ? '' : null"
+            >
+                <span class="text-primary text-md md:text-3xl font-medium uppercase">
+                    <?= $escaper->escapeHtml(__('Shop By')) ?>
+                </span>
+                <span
+                        class="py-1 px-1 bg-container-lighter rounded border border-container-darker hidden"
+                        :class="{ 'block' : isMobile, 'hidden': !isMobile }"
+                >
+                    <?= $heroicons->chevronDownHtml(
+                        'transition-transform transform duration-300 ease-in-out',
+                        24,
+                        24,
+                        [
+                            ":class"      => "{ 'rotate-180': blockOpen }",
+                            "aria-hidden" => "true",
+                            "focusable"   => "false"
+                        ]
+                    ); ?>
+                </span>
+            </button>
+        </h2>
+        <div
+                id="filters-content"
+                class="block-content filter-content pt-4"
+                x-show="isMobile && blockOpen || !isMobile"
+        >
+            <?= $block->getChildHtml('state') ?>
+            <a
+                    href="#product-list"
+                    class="sr-only focus:not-sr-only bg-blue-600 text-white px-12 py-4 text-center block rounded-sm"
+            >
+                <?= $escaper->escapeHtml(__('Skip to product list')) ?>
+            </a>
+            <?php foreach ($block->getFilters() as $filter): ?>
+                <?php if ($filter->getItemsCount()): ?>
+                    <div
+                            x-data="{
+                            open: false,
+                            id: $id('filter-option')
+                        }"
+                            class="filter-option card my-4"
+                    >
+                        <h3 :id="`${id}-title`">
+                            <button
+                                    type="button"
+                                    @click="open = !open"
+                                    class="filter-options-title flex justify-between items-center cursor-pointer text-start hover:text-secondary-darker border-container w-full"
+                                    :class="{ 'border-b pb-4': open }"
+                                    :aria-controls="`${id}-content`"
+                                    :aria-expanded="open"
+                            >
+                                <span class="title text-md md:text-lg font-semibold">
+                                    <?= $escaper->escapeHtml(__($filter->getName())) ?>
+                                    <span class="sr-only"> <?= $escaper->escapeHtml(__('filter')) ?></span>
+                                </span>
+                                <span class="py-1 px-1 rounded border border-container">
+                                    <?= $heroicons->chevronDownHtml(
+                                        'transition-transform transform duration-300 ease-in-out',
+                                        24,
+                                        24,
+                                        [
+                                            ":class"      => "{ 'rotate-180': open }",
+                                            "aria-hidden" => "true",
+                                            "focusable"   => "false"
+                                        ]
+                                    ); ?>
+                                </span>
+                            </button>
+                        </h3>
+                        <template x-if="open">
+                            <div
+                                    :id="`${id}-content`"
+                                    class="filter-options-content pt-3"
+                                    x-init="handleContentInitialization"
+                            >
+                                <?= /* @noEscape */
+                                $block->getChildBlock('renderer')->setFilterTitle($filter->getName())->render($filter); ?>
+                            </div>
+                        </template>
+                    </div>
+                <?php endif; ?>
+            <?php endforeach; ?>
+        </div>
+    </div>
+    <script>
+        function initLayeredNavigation () {
+            return {
+                isMobile: false,
+                blockOpen: false,
+                checkIsMobileResolution () {
+                    this.isMobile = window.matchMedia('(max-width: 767px)').matches;
+                },
+                handleContentInitialization() {
+                    let links = document.querySelectorAll('.filter-options-content a');
+                    links.forEach((link) => {
+                        link.addEventListener('click',(e)=>{
+                            e.preventDefault();
+                            handleClickLink(link.href);
+                        })
+                    })
+                }
+
+            }
+        }
+
+        function handleClickLink (link) {
+
+            event.preventDefault();
+            appendLoading();
+            let newLink= addTimestampToURL(link);
+            window.history.pushState({url: link}, '', link);
+            fetch(newLink, {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-Requested-With': 'XMLHttpRequest',
+                    },
+                }
+            ).then(response => {
+                    return response.json();
+                }
+            ).then(data => {
+                let productContainer = document.querySelector('#layer-product-list');
+                let layerContainer   = document.querySelector('#layered-filter-block-container');
+                if (productContainer) {
+                    hyva.replaceDomElement('#product-list',data.products)
+                }
+
+                if (layerContainer) {
+                    hyva.replaceDomElement('#layered-navigation-hyva',data.navigation)
+                }
+
+
+                removeLoading();
+
+            }).catch(error => {
+                removeLoading();
+            });
+
+
+
+        }
+
+        function addTimestampToURL(originalURL) {
+            // Get the current timestamp
+            var timestamp = new Date().getTime();
+
+            // Check if the original URL already contains a query parameter
+            var separator = originalURL.includes('?') ? '&' : '?';
+
+            // Append the timestamp as a query parameter
+            var modifiedURL = originalURL + separator + '_=' + timestamp;
+
+            return modifiedURL;
+        }
+
+        function appendLoading () {
+            var block = document.querySelector(".ln_overlay");
+            if (block) {
+                block.style.display = 'block';
+            }
+        }
+
+        function removeLoading () {
+            var block = document.querySelector(".ln_overlay");
+
+            if (block) {
+                block.style.display = 'none';
+
+            }
+        }
+    </script>
+<?php endif; ?>

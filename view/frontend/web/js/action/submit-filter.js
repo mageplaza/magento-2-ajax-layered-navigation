@@ -68,14 +68,39 @@ define(
                         window.location = response.backUrl;
                         return;
                     }
+
                     if (response.navigation) {
                         layerContainer.html(response.navigation);
+                    } else {
+                        var layer = $(response).find(".layered-filter-block-container").html();
+                        if (layer) {
+                            layerContainer.html(layer);
+                        }
                     }
+
                     if (response.products) {
                         productContainer.html(response.products);
+                    } else {
+                        var products = $(response).find("#layer-product-list").html();
+                        if (layer) {
+                            productContainer.html(products);
+                        }
                     }
+
+                    if ($(response).length) {
+                        $(response).each(function (){
+                            if ($(this)[0].name && $(this)[0].name === 'robots'){
+                                $('head meta[name="robots"]').first().replaceWith($(this));
+                            }
+                        })
+                    }
+
                     if (response.quickview) {
                         quickViewContainer.html(response.quickview);
+                    }
+
+                    if (response.finder) {
+                        $('.mpproductfinder-block').html(response.finder);
                     }
 
                     ko.cleanNode(productContainer[0]);

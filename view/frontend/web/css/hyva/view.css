@@ -1,0 +1,30 @@
+.ln_overlay {
+    background-color: #FFFFFF;
+    height: 100vh;
+    text-align: center;
+    opacity: 0.5;
+    filter: alpha(opacity=50);
+    position: fixed;
+    cursor: wait;
+    width: 100vw;
+    z-index: 555;
+    display: none;
+    top: 0;
+    left: 0;
+}
+
+.ln_overlay img {
+    margin-top: 300px;
+    left: 45%;
+    display: block;
+    position: fixed;
+}
+
+.ln_slider_container {
+    width: calc(100% - 20px);
+    margin: 0 15px 0 5px;
+}
+
+.filter-options-content a {
+    display: inline-block !important;
+}

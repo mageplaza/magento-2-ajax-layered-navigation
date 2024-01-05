@@ -29,6 +29,7 @@ use Mageplaza\AjaxLayer\Helper\Data as LayerData;
  */
 class View
 {
+    protected $moduleManager;
     /**
      * @var LayerData
      */
@@ -40,8 +41,10 @@ class View
      * @param LayerData $moduleHelper
      */
     public function __construct(
+        \Magento\Framework\Module\Manager $moduleManager,
         LayerData $moduleHelper
     ) {
+        $this->moduleManager = $moduleManager;
         $this->_moduleHelper = $moduleHelper;
     }
 
@@ -53,6 +56,9 @@ class View
      */
     public function afterExecute(\Magento\Catalog\Controller\Category\View $action, $page)
     {
+        if ($this->moduleManager->isOutputEnabled('Mageplaza_SeoUrl')){
+            return $page;
+        }
         if ($this->_moduleHelper->ajaxEnabled() && $action->getRequest()->isAjax()) {
             $navigation = $page->getLayout()->getBlock('catalog.leftnav');
             $products = $page->getLayout()->getBlock('category.products');

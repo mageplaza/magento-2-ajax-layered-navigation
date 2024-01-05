@@ -1,0 +1,78 @@
+<?php
+/**
+ * Mageplaza
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Mageplaza.com license that is
+ * available through the world-wide-web at this URL:
+ * https://www.mageplaza.com/LICENSE.txt
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade this extension to newer
+ * version in the future.
+ *
+ * @category    Mageplaza
+ * @package     Mageplaza_AjaxLayer
+ * @copyright   Copyright (c) Mageplaza (http://www.mageplaza.com/)
+ * @license     https://www.mageplaza.com/LICENSE.txt
+ */
+
+declare(strict_types=1);
+
+use Hyva\Theme\Model\LocaleFormatter;
+use Magento\Catalog\Helper\Data;
+use Magento\Framework\Escaper;
+use Magento\LayeredNavigation\Block\Navigation\FilterRenderer;
+
+/** @var FilterRenderer $block */
+/** @var Escaper $escaper */
+/** @var LocaleFormatter $localeFormatter */
+
+$catalogHelper = $this->helper(Data::class);
+
+/** @var array $filterItems */
+?>
+
+<ol x-data="{ products: '', navigation: '' }" class="items" aria-label="<?= $escaper->escapeHtmlAttr(__('%1 filter options', $block->getFilterTitle())) ?>">
+    <?php foreach ($filterItems as $filterItem): ?>
+        <li>
+            <?php if ($filterItem->getCount() > 0): ?>
+                <a href="<?= $escaper->escapeUrl($filterItem->getUrl()) ?>"
+                   class="flex justify-between py-1 hover:text-black"
+                    <?php if ((int) $filterItem->getCount() === 1): ?>
+                        aria-label="<?= $escaper->escapeHtmlAttr(__('%1 filter, 1 available product',
+                            $filterItem->getLabel())) ?>"
+                    <?php else: ?>
+                        aria-label="<?= $escaper->escapeHtmlAttr(__('%1 filter, %2 available products',
+                            $filterItem->getLabel(), $filterItem->getCount())) ?>"
+                    <?php endif; ?>
+
+                >
+                    <span><?= /* @noEscape */
+                        $filterItem->getLabel() ?></span>
+                    <?php if ($catalogHelper->shouldDisplayProductCountOnLayer()): ?>
+                        <span class="count text-primary">(<?= /* @noEscape */
+                            $localeFormatter->formatNumber((int) $filterItem->getCount()) ?>)</span>
+                    <?php endif; ?>
+                </a>
+            <?php else: ?>
+                <span class="flex justify-between py-1 hover:text-black">
+                    <span><?= /* @noEscape */
+                        $filterItem->getLabel() ?></span>
+                <?php if ($catalogHelper->shouldDisplayProductCountOnLayer()): ?>
+                    <span class="count text-primary">(<?= /* @noEscape */
+                        $localeFormatter->formatNumber((int) $filterItem->getCount()) ?>)</span>
+                <?php endif; ?>
+            </span>
+            <?php endif; ?>
+        </li>
+    <?php endforeach ?>
+</ol>
+
+<script >
+
+
+
+</script>
