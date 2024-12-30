@@ -50,11 +50,23 @@ $additionalOptions = ['page' => 'p'];
 
                 return params;
             },
+            changeViewMode(e, link) {
+                e.preventDefault();
+                if (link) {
+                    this.ajaxSubmit(link);
+                }
+            },
             getCurrentLimit: function () {
                 return this.getUrlParams()[this.options.limit] || this.options.limitDefault;
             },
             getCurrentPage: function () {
                 return this.getUrlParams()[this.options.page] || 1;
+            },
+            addTimestampToURL: function (originalURL) {
+                var timestamp = new Date().getTime();
+                var separator = originalURL.includes('?') ? '&' : '?';
+                var modifiedURL = originalURL + separator + '_=' + timestamp;
+                return modifiedURL;
             },
             changeUrl (paramName, paramValue, defaultValue) {
                 let urlPaths    = this.options.url.split('?'),
@@ -90,7 +102,7 @@ $additionalOptions = ['page' => 'p'];
                         : '?' + (new URLSearchParams(paramData));
                     appendLoading();
                     let link = baseUrl + paramData;
-                    let newLink= addTimestampToURL(link);
+                    let newLink= this.addTimestampToURL(link);
                     window.history.pushState({url: link}, '', link);
                     fetch(newLink, {
                             method: 'GET',
@@ -106,11 +118,13 @@ $additionalOptions = ['page' => 'p'];
                         let productContainer = document.querySelector('#layer-product-list');
                         let layerContainer   = document.querySelector('#layered-filter-block-container');
                         if (productContainer) {
-                            hyva.replaceDomElement('#product-list',data.products)
+                            productContainer.innerHTML = data.products;
+                            hyva.activateScripts(productContainer);
                         }
 
                         if (layerContainer) {
-                            hyva.replaceDomElement('#layered-navigation-hyva',data.navigation)
+                            layerContainer.innerHTML = data.navigation;
+                            hyva.activateScripts(layerContainer);
                         }
 
                         window.history.pushState({url: link}, '', link);
