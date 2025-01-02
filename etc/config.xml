@@ -23,6 +23,9 @@
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Store:etc/config.xsd">
     <default>
         <layered_navigation>
+            <module>
+                <user_guide>magento/module-ajax-layered-navigation</user_guide>
+            </module>
             <general>
                 <ajax_enable>1</ajax_enable>
             </general>
