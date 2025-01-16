@@ -34,21 +34,16 @@ $additionalOptions = ['page' => 'p'];
     function initToolbar<?= /** @noEscape */  $uniqueId ?>() {
         return {
             options: <?= /* @noEscape */ $block->getWidgetOptionsJson($additionalOptions) ?>.productListToolbarForm || {},
+            isLoading: false,
             getUrlParams: function () {
-                let decode    = window.decodeURIComponent,
-                    urlPaths  = this.options.url.split('?'),
-                    urlParams = urlPaths[1] ? urlPaths[1].split('&') : [],
-                    params    = {},
-                    parameters, i;
-
-                for (i = 0; i < urlParams.length; i++){
-                    parameters                    = urlParams[i].split('=');
-                    params[decode(parameters[0])] = parameters[1] !== undefined ?
-                        decode(parameters[1].replace(/\+/g, '%20')) :
-                        '';
-                }
-
-                return params;
+                const decode = window.decodeURIComponent;
+                const [baseUrl, queryString] = this.options.url.split('?');
+                const urlParams = queryString ? queryString.split('&') : [];
+                return urlParams.reduce((params, param) => {
+                    const [key, value] = param.split('=');
+                    params[decode(key)] = value !== undefined ? decode(value.replace(/\+/g, '%20')) : '';
+                    return params;
+                }, {});
             },
             changeViewMode(e, link) {
                 e.preventDefault();
@@ -63,24 +58,21 @@ $additionalOptions = ['page' => 'p'];
                 return this.getUrlParams()[this.options.page] || 1;
             },
             addTimestampToURL: function (originalURL) {
-                var timestamp = new Date().getTime();
-                var separator = originalURL.includes('?') ? '&' : '?';
-                var modifiedURL = originalURL + separator + '_=' + timestamp;
-                return modifiedURL;
+                const timestamp = Date.now();
+                const separator = originalURL.includes('?') ? '&' : '?';
+                return `${originalURL}${separator}_=${timestamp}`;
             },
             changeUrl (paramName, paramValue, defaultValue) {
-                let urlPaths    = this.options.url.split('?'),
-                    baseUrl     = urlPaths[0],
-                    paramData   = this.getUrlParams(),
-                    currentPage = this.getCurrentPage(),
-                    newPage;
+                const [baseUrl, queryString] = this.options.url.split('?');
+                const paramData = this.getUrlParams();
+                const currentPage = this.getCurrentPage();
 
                 /**
                  * calculates the page on which the first item of the current page will
                  * be with the new limit and sets that number as the new page
                  */
                 if (currentPage > 1 && paramName === this.options.limit) {
-                    newPage = Math.floor(this.getCurrentLimit() * (currentPage - 1) / paramValue) + 1;
+                    const newPage = Math.floor(this.getCurrentLimit() * (currentPage - 1) / paramValue) + 1;
 
                     if (newPage > 1) {
                         paramData[this.options.page] = newPage;
@@ -97,11 +89,9 @@ $additionalOptions = ['page' => 'p'];
                     if (paramValue === defaultValue.toString()) {
                         delete paramData[paramName];
                     }
-                    paramData = Object.keys(paramData).length === 0
-                        ? ''
-                        : '?' + (new URLSearchParams(paramData));
-                    appendLoading();
-                    let link = baseUrl + paramData;
+                    const queryString = Object.keys(paramData).length === 0 ? '' : `?${new URLSearchParams(paramData)}`;
+                    this.showLoader();
+                    let link = baseUrl + queryString;
                     let newLink= this.addTimestampToURL(link);
                     window.history.pushState({url: link}, '', link);
                     fetch(newLink, {
@@ -111,10 +101,8 @@ $additionalOptions = ['page' => 'p'];
                                 'X-Requested-With': 'XMLHttpRequest'
                             }
                         }
-                    ).then(response => {
-                            return response.json();
-                        }
-                    ).then(data => {
+                    ).then(response => response.json())
+                    .then(data => {
                         let productContainer = document.querySelector('#layer-product-list');
                         let layerContainer   = document.querySelector('#layered-filter-block-container');
                         if (productContainer) {
@@ -128,24 +116,34 @@ $additionalOptions = ['page' => 'p'];
                         }
 
                         window.history.pushState({url: link}, '', link);
-                        removeLoading();
-
+                        this.hideLoader();
                     }).catch(error => {
-                        location.href = baseUrl + paramData;
-                        removeLoading();
+                        location.href = baseUrl + queryString;
+                        this.hideLoader();
                     });
                 }
-            }
+            },
+            showLoader() {
+                const loader = document.querySelector('.mplayer-loader');
+                if (loader) {
+                    loader.style.display='';
+                }
+            },
+            hideLoader() {
+                const loader = document.querySelector('.mplayer-loader');
+                if (loader) {
+                    loader.style.display = 'none';
+                }
+            },
         }
     }
-
-
 </script>
 <?php if ($block->getCollection()->getSize()): ?>
     <div x-data="initToolbar<?= /** @noEscape */
     $uniqueId ?>()"
          class="toolbar toolbar-products grid grid-cols-4 sm:grid-cols-8 md:grid-cols-4
             lg:grid-cols-8  grid-flow-row gap-2 items-center">
+        <?= $block->getBlockHtml('mplayer_loader') ?>
         <?php if ($block->getIsBottom()): ?>
             <?= /** @noEscape */
             $block->fetchView($block->getTemplateFile('Magento_Catalog::product/list/toolbar/amount.phtml')) ?>

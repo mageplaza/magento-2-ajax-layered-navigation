@@ -36,22 +36,21 @@ $compareViewModel = $viewModels->require(ProductCompare::class);
             return {
                 addToCompare(productId) {
                     const formKey = hyva.getFormKey();
-                    const postUrl = BASE_URL + 'catalog/product_compare/add/';
-                    appendLoading();
+                    const postUrl = `${BASE_URL}catalog/product_compare/add/`;
+                    showLoader();
                     fetch(postUrl, {
                         "headers": {
                             "content-type": "application/x-www-form-urlencoded; charset=UTF-8",
                         },
-                        "body": "form_key=" + formKey + "&product=" + productId + "&uenc=" + hyva.getUenc(),
+                        "body": `form_key=${formKey}&product=${productId}&uenc=${hyva.getUenc()}`,
                         "method": "POST",
                         "mode": "cors",
                         "credentials": "include"
                     }).then(function (response) {
                         if (response.redirected) {
-                            const reloadCustomerDataEvent = new CustomEvent("reload-customer-section-data");
-                            window.dispatchEvent(reloadCustomerDataEvent);
+                            window.dispatchEvent(new CustomEvent("reload-customer-section-data"));
                         }
-                        removeLoading();
+                        hideLoader();
                     }).catch(function (error) {
                         typeof window.dispatchMessages !== "undefined" && window.dispatchMessages(
                             [{
@@ -59,10 +58,23 @@ $compareViewModel = $viewModels->require(ProductCompare::class);
                                 text: error
                             }], 5000
                         );
-                        removeLoading();
+                        hideLoader();
                     });
                 }
             };
+        }
+        function showLoader() {
+            const loader = document.querySelector('.mplayer-loader');
+            if (loader) {
+                loader.style.display='';
+            }
+        }
+
+        function hideLoader() {
+            const loader = document.querySelector('.mplayer-loader');
+            if (loader) {
+                loader.style.display = 'none';
+            }
         }
     </script>
 <?php endif; ?>

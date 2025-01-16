@@ -25,6 +25,12 @@
         <css src="Mageplaza_AjaxLayer::css/hyva/view.css"/>
     </head>
     <body>
+        <block name="mplayer_loader" template="Mageplaza_AjaxLayer::hyva/ui/loading.phtml"/>
+        <referenceBlock name="product_list_toolbar">
+            <action method="setTemplate" ifconfig="layered_navigation/general/ajax_enable">
+                <argument name="template" xsi:type="string">Mageplaza_AjaxLayer::hyva/product/list/toolbar.phtml</argument>
+            </action>
+        </referenceBlock>
         <referenceBlock name="catalogsearch.leftnav">
             <action method="setTemplate" ifconfig="layered_navigation/general/ajax_enable">
                 <argument name="template" xsi:type="string">Mageplaza_AjaxLayer::hyva/layer/view.phtml</argument>

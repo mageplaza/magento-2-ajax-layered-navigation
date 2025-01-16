@@ -36,19 +36,18 @@ $wishlistViewModel = $viewModels->require(Wishlist::class);
     $filters = $block->getFilters();
     $layerConfig = $helper->getLayerConfiguration($filters);
     ?>
-
     <script>
         function initWishlist() {
             return {
                 addToWishlist(productId) {
                     const formKey = hyva.getFormKey();
-                    const postUrl = BASE_URL + 'wishlist/index/add/';
-                    appendLoading();
+                    const postUrl = `${BASE_URL}wishlist/index/add/`;
+                    showLoader();
                     fetch(postUrl, {
                         "headers": {
                             "content-type": "application/x-www-form-urlencoded; charset=UTF-8",
                         },
-                        "body": "form_key=" + formKey + "&product=" + productId + "&uenc=" + hyva.getUenc(),
+                        "body": `form_key=${formKey}&product=${productId}&uenc=${hyva.getUenc()}`,
                         "method": "POST",
                         "mode": "cors",
                         "credentials": "include"
@@ -59,10 +58,8 @@ $wishlistViewModel = $viewModels->require(Wishlist::class);
                             if(!layerConfig?.isCustomerLoggedIn) {
                                 window.location.href = response.url;
                             } else {
-                                const reloadCustomerDataEvent = new CustomEvent("reload-customer-section-data");
-                                window.dispatchEvent(reloadCustomerDataEvent);
+                                window.dispatchEvent(new CustomEvent("reload-customer-section-data"));
                             }
-
                         } else if (response.ok) {
                             return response.json();
                         } else {
@@ -73,7 +70,7 @@ $wishlistViewModel = $viewModels->require(Wishlist::class);
                                 }], 5000
                             );
                         }
-                        removeLoading();
+                        hideLoader();
                     }).then(function (response) {
                         if (!response) { return }
                         typeof window.dispatchMessages !== "undefined" && window.dispatchMessages(
@@ -87,9 +84,8 @@ $wishlistViewModel = $viewModels->require(Wishlist::class);
                                     : response.error_message
                             }], 5000
                         );
-                        const reloadCustomerDataEvent = new CustomEvent("reload-customer-section-data");
-                        window.dispatchEvent(reloadCustomerDataEvent);
-                        removeLoading();
+                        window.dispatchEvent(new CustomEvent("reload-customer-section-data"));
+                        hideLoader();
                     }).catch(function (error) {
                         typeof window.dispatchMessages !== "undefined" && window.dispatchMessages(
                             [{
@@ -97,25 +93,22 @@ $wishlistViewModel = $viewModels->require(Wishlist::class);
                                 text: error
                             }], 5000
                         );
-                        removeLoading();
+                        hideLoader();
                     });
                 }
             }
         }
-        function appendLoading () {
-            var block = document.querySelector(".ln_overlay");
-            if (block) {
-                block.style.display = 'block';
-
+        function showLoader() {
+            const loader = document.querySelector('.mplayer-loader');
+            if (loader) {
+                loader.style.display='';
             }
         }
 
-        function removeLoading () {
-            var block = document.querySelector(".ln_overlay");
-
-            if (block) {
-                block.style.display = 'none';
-
+        function hideLoader() {
+            const loader = document.querySelector('.mplayer-loader');
+            if (loader) {
+                loader.style.display = 'none';
             }
         }
     </script>
