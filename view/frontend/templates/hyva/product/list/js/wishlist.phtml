@@ -52,7 +52,7 @@ $wishlistViewModel = $viewModels->require(Wishlist::class);
                         "mode": "cors",
                         "credentials": "include"
                     }).then(function (response) {
-                        let layerConfig = <?= $layerConfig ?>;
+                        let layerConfig = <?= /** @noEscape */ $layerConfig ?>;
 
                         if (response.redirected) {
                             if(!layerConfig?.isCustomerLoggedIn) {
