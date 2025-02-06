@@ -175,12 +175,15 @@ $heroicons = $viewModels->require(HeroiconsOutline::class);
                     .then(data => {
                         let productContainer = document.querySelector('#layer-product-list');
                         let layerContainer   = document.querySelector('#layered-filter-block-container');
+                        debugger
                         if (productContainer) {
-                            hyva.replaceDomElement('#product-list', data.products)
+                            productContainer.innerHTML = data.products;
+                            hyva.activateScripts(productContainer);
                         }
 
                         if (layerContainer) {
-                            hyva.replaceDomElement('#layered-navigation-hyva', data.navigation)
+                            layerContainer.innerHTML = data.navigation;
+                            hyva.activateScripts(layerContainer);
                         }
                         this.isLoading = false;
                     }).catch(error => {
