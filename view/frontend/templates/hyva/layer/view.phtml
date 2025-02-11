@@ -21,18 +21,11 @@
 
 declare(strict_types=1);
 
-use Hyva\Theme\Model\ViewModelRegistry;
-use Hyva\Theme\ViewModel\HeroiconsOutline;
-use Magento\Framework\Escaper;
-use Magento\LayeredNavigation\Block\Navigation;
-
-
-/** @var Navigation $block */
-/** @var Escaper $escaper */
-/** @var ViewModelRegistry $viewModels */
-
-/** @var HeroiconsOutline $heroicons */
-$heroicons = $viewModels->require(HeroiconsOutline::class);
+/** @var \Magento\LayeredNavigation\Block\Navigation $block */
+/** @var \Magento\Framework\Escaper $escaper */
+/** @var \Hyva\Theme\Model\ViewModelRegistry $viewModels */
+/** @var \Hyva\Theme\ViewModel\HeroiconsOutline $heroIcons */
+$heroIcons = $viewModels->require(\Hyva\Theme\ViewModel\HeroiconsOutline::class);
 ?>
 <?php if ($block->canShowBlock()): ?>
     <div x-data="initLayeredNavigation()"
@@ -65,7 +58,7 @@ $heroicons = $viewModels->require(HeroiconsOutline::class);
                     class="py-1 px-1 bg-container-lighter rounded border border-container-darker hidden"
                     :class="{ 'block' : isMobile, 'hidden': !isMobile }"
                 >
-                    <?= $heroicons->chevronDownHtml(
+                    <?= $heroIcons->chevronDownHtml(
                         'transition-transform transform duration-300 ease-in-out',
                         24,
                         24,
@@ -113,7 +106,7 @@ $heroicons = $viewModels->require(HeroiconsOutline::class);
                                     <span class="sr-only"> <?= $escaper->escapeHtml(__('filter')) ?></span>
                                 </span>
                                 <span class="py-1 px-1 rounded border border-container">
-                                    <?= $heroicons->chevronDownHtml(
+                                    <?= $heroIcons->chevronDownHtml(
                                         'transition-transform transform duration-300 ease-in-out',
                                         24,
                                         24,
@@ -175,7 +168,6 @@ $heroicons = $viewModels->require(HeroiconsOutline::class);
                     .then(data => {
                         let productContainer = document.querySelector('#layer-product-list');
                         let layerContainer   = document.querySelector('#layered-filter-block-container');
-                        debugger
                         if (productContainer) {
                             productContainer.innerHTML = data.products;
                             hyva.activateScripts(productContainer);
