@@ -21,14 +21,11 @@
 
 declare(strict_types=1);
 
-use Hyva\Theme\Model\ViewModelRegistry;
 use Hyva\Theme\ViewModel\HeroiconsOutline;
-use Magento\Framework\Escaper;
-use Magento\LayeredNavigation\Block\Navigation\State;
 
-/** @var State $block */
-/** @var Escaper $escaper */
-/** @var ViewModelRegistry $viewModels */
+/** @var \Magento\LayeredNavigation\Block\Navigation\State $block */
+/** @var \Magento\Framework\Escaper $escaper */
+/** @var \Hyva\Theme\Model\ViewModelRegistry $viewModels */
 
 /** @var HeroiconsOutline $heroicons */
 $heroicons = $viewModels->require(HeroiconsOutline::class);

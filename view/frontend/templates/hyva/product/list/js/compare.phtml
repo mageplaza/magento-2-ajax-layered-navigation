@@ -19,13 +19,10 @@
  * @license     https://www.mageplaza.com/LICENSE.txt
  */
 
-use Hyva\Theme\Model\ViewModelRegistry;
 use Hyva\Theme\ViewModel\ProductCompare;
-use Hyva\Theme\ViewModel\Wishlist;
-use Magento\Framework\Escaper;
 
-/** @var ViewModelRegistry $viewModels */
-/** @var Escaper $escaper */
+/** @var \Hyva\Theme\Model\ViewModelRegistry $viewModels */
+/** @var \Magento\Framework\Escaper $escaper */
 
 /** @var ProductCompare $compareViewModel */
 $compareViewModel = $viewModels->require(ProductCompare::class);
