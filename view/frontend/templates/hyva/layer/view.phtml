@@ -29,7 +29,7 @@ $heroIcons = $viewModels->require(\Hyva\Theme\ViewModel\HeroiconsOutline::class)
 ?>
 <?php if ($block->canShowBlock()): ?>
     <div x-data="initLayeredNavigation()"
-         x-init="checkIsMobileResolution()"
+         x-init="checkIsMobileResolution(); initClickPage()"
          @resize.window.debounce="checkIsMobileResolution()"
          @visibilitychange.window.debounce="checkIsMobileResolution()"
          class="block border border-container bg-container-darker p-4 md:border-0 md:bg-transparent md:py-0 md:px-0 my-6"
@@ -191,6 +191,17 @@ $heroIcons = $viewModels->require(\Hyva\Theme\ViewModel\HeroiconsOutline::class)
 
                     // Append the timestamp as a query parameter
                     return `${originalURL}${separator}_=${timestamp}`;
+                },
+                initClickPage() {
+                    const pageElements = document.querySelectorAll('.toolbar-products .pages a'), self = this;
+                    pageElements.forEach(function (el) {
+                        el.addEventListener('click', function (e) {
+                            const linkEl = el.getAttribute('href');
+                            if (linkEl) {
+                                self.handleClickLink(linkEl,e);
+                            }
+                        });
+                    })
                 }
             }
         }

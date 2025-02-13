@@ -81,7 +81,7 @@ $heroicons = $viewModels->require(HeroiconsOutline::class);
                 </span>
                 <span>
                     <a class="py-2 px-2 text-center block action remove text-primary hover:text-primary-darker"
-                       onclick="handleClickLink('<?= $escaper->escapeUrl($filter->getRemoveUrl()) ?>')"
+                       @click.prevent="handleClickLink('<?= $escaper->escapeUrl($filter->getRemoveUrl()) ?>', $event)"
                        href="<?= $escaper->escapeUrl($filter->getRemoveUrl()) ?>"
                        title="<?= /* @noEscape */ $escaper->escapeHtmlAttr(__('Remove active %1 filter: %2', $filterName, $filterLabel)) ?>">
                         <?= $heroicons->trashHtml('', 20, 20, ["aria-hidden" => "true"]); ?>
@@ -92,7 +92,7 @@ $heroicons = $viewModels->require(HeroiconsOutline::class);
     </div>
     <?php if ($block->getLayer()->getState()->getFilters()): ?>
         <div class="block-actions filter-actions">
-            <a onclick="handleClickLink('<?= $escaper->escapeUrl($block->getClearUrl()) ?>')" href="<?= $escaper->escapeUrl($block->getClearUrl()) ?>"
+            <a @click.prevent="handleClickLink('<?= $escaper->escapeUrl($block->getClearUrl()) ?>', $event)" href="<?= $escaper->escapeUrl($block->getClearUrl()) ?>"
                class="text-xs text-primary hover:text-primary-darker"><?= $escaper->escapeHtml(__('Clear All')) ?></a>
         </div>
     <?php endif; ?>
