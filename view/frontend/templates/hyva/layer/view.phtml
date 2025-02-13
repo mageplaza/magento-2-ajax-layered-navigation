@@ -86,10 +86,7 @@ $heroIcons = $viewModels->require(\Hyva\Theme\ViewModel\HeroiconsOutline::class)
             <?php foreach ($block->getFilters() as $filter): ?>
                 <?php if ($filter->getItemsCount()): ?>
                     <div
-                        x-data="{
-                            open: false,
-                            id: $id('filter-option')
-                        }"
+                        x-data="{open: false,id: $id('filter-option')}"
                         class="filter-option card my-4"
                     >
                         <h3 :id="`${id}-title`">
@@ -97,7 +94,7 @@ $heroIcons = $viewModels->require(\Hyva\Theme\ViewModel\HeroiconsOutline::class)
                                 type="button"
                                 @click="open = !open"
                                 class="filter-options-title flex justify-between items-center cursor-pointer text-start hover:text-secondary-darker border-container w-full"
-                                :class="{ 'border-b pb-4': open }"
+                                :class="{'border-b pb-4': open}"
                                 :aria-controls="`${id}-content`"
                                 :aria-expanded="open"
                             >
@@ -106,7 +103,7 @@ $heroIcons = $viewModels->require(\Hyva\Theme\ViewModel\HeroiconsOutline::class)
                                     <span class="sr-only"> <?= $escaper->escapeHtml(__('filter')) ?></span>
                                 </span>
                                 <span class="py-1 px-1 rounded border border-container">
-                                    <?= $heroIcons->chevronDownHtml(
+                                    <?=/* @noEscape */ $heroIcons->chevronDownHtml(
                                         'transition-transform transform duration-300 ease-in-out',
                                         24,
                                         24,
@@ -123,10 +120,10 @@ $heroIcons = $viewModels->require(\Hyva\Theme\ViewModel\HeroiconsOutline::class)
                             <div
                                 :id="`${id}-content`"
                                 class="filter-options-content pt-3"
-                                x-init="handleContentInitialization"
+                                x-init="handleContentInitialization()"
                             >
-                                <?= /* @noEscape */
-                                $block->getChildBlock('renderer')->setFilterTitle($filter->getName())->render($filter); ?>
+                                <?= /* @noEscape */ $block->getChildBlock('renderer')
+                                    ->setFilterTitle($filter->getName())->render($filter) ?>
                             </div>
                         </template>
                     </div>
