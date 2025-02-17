@@ -22,9 +22,25 @@
 -->
 <page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
     <head>
-        <css src="Mageplaza_AjaxLayer::css/hyva/view.css"/>
+        <remove src="Mageplaza_AjaxLayer::css/hyva/view.css"/>
     </head>
+    <update handle="hyva_mp_add_js_css"/>
     <body>
+        <!-- Define multiple custom JS/Css files -->
+        <referenceBlock name="mp_add_js_css">
+            <action method="setFiles">
+                <argument name="files" xsi:type="array">
+                    <item name="style_css" xsi:type="string">Mageplaza_AjaxLayer::css/hyva/view.css</item>
+                </argument>
+            </action>
+        </referenceBlock>
+
+        <block name="mplayer_loader" template="Mageplaza_AjaxLayer::hyva/ui/loading.phtml"/>
+        <referenceBlock name="product_list_toolbar">
+            <action method="setTemplate" ifconfig="layered_navigation/general/ajax_enable">
+                <argument name="template" xsi:type="string">Mageplaza_AjaxLayer::hyva/product/list/toolbar.phtml</argument>
+            </action>
+        </referenceBlock>
         <referenceBlock name="catalogsearch.leftnav">
             <action method="setTemplate" ifconfig="layered_navigation/general/ajax_enable">
                 <argument name="template" xsi:type="string">Mageplaza_AjaxLayer::hyva/layer/view.phtml</argument>

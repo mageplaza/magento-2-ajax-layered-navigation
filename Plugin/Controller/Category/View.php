@@ -56,15 +56,12 @@ class View
      */
     public function afterExecute(\Magento\Catalog\Controller\Category\View $action, $page)
     {
-        if ($this->moduleManager->isOutputEnabled('Mageplaza_SeoUrl')){
-            return $page;
-        }
         if ($this->_moduleHelper->ajaxEnabled() && $action->getRequest()->isAjax()) {
             $navigation = $page->getLayout()->getBlock('catalog.leftnav');
-            $products = $page->getLayout()->getBlock('category.products');
-            $result = ['products' => $products->toHtml(), 'navigation' => $navigation->toHtml()];
+            $products   = $page->getLayout()->getBlock('category.products');
+            $result     = ['products' => $products->toHtml(), 'navigation' => $navigation->toHtml()];
             if ($this->_moduleHelper->getConfigValue('mpquickview/general/enabled')) {
-                $quickView = $page->getLayout()->getBlock('mpquickview.quickview');
+                $quickView           = $page->getLayout()->getBlock('mpquickview.quickview');
                 $result['quickview'] = $quickView->toHtml();
             }
             $action->getResponse()->representJson(LayerData::jsonEncode($result));

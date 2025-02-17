@@ -23,11 +23,9 @@ declare(strict_types=1);
 
 use Hyva\Theme\Model\LocaleFormatter;
 use Magento\Catalog\Helper\Data;
-use Magento\Framework\Escaper;
-use Magento\LayeredNavigation\Block\Navigation\FilterRenderer;
 
-/** @var FilterRenderer $block */
-/** @var Escaper $escaper */
+/** @var \Magento\LayeredNavigation\Block\Navigation\FilterRenderer $block */
+/** @var \Magento\Framework\Escaper $escaper */
 /** @var LocaleFormatter $localeFormatter */
 
 $catalogHelper = $this->helper(Data::class);
