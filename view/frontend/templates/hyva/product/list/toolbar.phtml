@@ -54,11 +54,6 @@ $additionalOptions = ['page' => 'p'];
             getCurrentPage: function () {
                 return this.getUrlParams()[this.options.page] || 1;
             },
-            addTimestampToURL: function (originalURL) {
-                const timestamp = Date.now();
-                const separator = originalURL.includes('?') ? '&' : '?';
-                return `${originalURL}${separator}_=${timestamp}`;
-            },
             changeUrl (paramName, paramValue, defaultValue) {
                 const [baseUrl, queryString] = this.options.url.split('?');
                 const paramData = this.getUrlParams();
@@ -89,9 +84,8 @@ $additionalOptions = ['page' => 'p'];
                     const queryString = Object.keys(paramData).length === 0 ? '' : `?${new URLSearchParams(paramData)}`;
                     this.showLoader();
                     let link = baseUrl + queryString;
-                    let newLink= this.addTimestampToURL(link);
                     window.history.pushState({url: link}, '', link);
-                    fetch(newLink, {
+                    fetch(link, {
                             method: 'GET',
                             headers: {
                                 'Content-Type': 'application/json',

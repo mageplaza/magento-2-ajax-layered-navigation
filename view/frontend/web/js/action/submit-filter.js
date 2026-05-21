@@ -22,11 +22,12 @@ define(
     [
         'jquery',
         'mage/storage',
+        'mage/url',
         'Mageplaza_AjaxLayer/js/model/loader',
         'mage/apply/main',
         'ko'
     ],
-    function ($, storage, loader, mage, ko) {
+    function ($, storage, urlBuilder, loader, mage, ko) {
         'use strict';
 
         var productContainer   = $('#layer-product-list'),
@@ -62,7 +63,13 @@ define(
                 });
             }
 
-            return storage.get(submitUrl).done(
+            return $.ajax({
+                url: urlBuilder.build(submitUrl),
+                type: 'GET',
+                cache: true, // override global $.ajaxSetup({cache:false}) so no _= param is added and FPC can be hit
+                global: true,
+                contentType: 'application/json'
+            }).done(
                 function (response) {
                     if (response.backUrl) {
                         window.location = response.backUrl;

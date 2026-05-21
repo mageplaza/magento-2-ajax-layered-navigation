@@ -152,9 +152,8 @@ $heroIcons = $viewModels->require(\Hyva\Theme\ViewModel\HeroiconsOutline::class)
                 handleClickLink (link, event) {
                     event.preventDefault();
                     this.isLoading = true;
-                    let newLink  = this.addTimestampToURL(link);
                     window.history.pushState({url: link}, '', link);
-                    fetch(newLink, {
+                    fetch(link, {
                             method: 'GET',
                             headers: {
                                 'Content-Type': 'application/json',
@@ -178,16 +177,6 @@ $heroIcons = $viewModels->require(\Hyva\Theme\ViewModel\HeroiconsOutline::class)
                     }).catch(error => {
                         this.isLoading = false;
                     });
-                },
-                addTimestampToURL (originalURL) {
-                    // Get the current timestamp
-                    const timestamp = Date.now();
-
-                    // Check if the original URL already contains a query parameter
-                    const separator = originalURL.includes('?') ? '&' : '?';
-
-                    // Append the timestamp as a query parameter
-                    return `${originalURL}${separator}_=${timestamp}`;
                 },
                 initClickPage() {
                     const pageElements = document.querySelectorAll('.toolbar-products .pages a'), self = this;
