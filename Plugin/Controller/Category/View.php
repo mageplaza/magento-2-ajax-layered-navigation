@@ -22,6 +22,7 @@
 namespace Mageplaza\AjaxLayer\Plugin\Controller\Category;
 
 use Mageplaza\AjaxLayer\Helper\Data as LayerData;
+use Magento\Framework\View\Result\Page;
 
 /**
  * Class View
@@ -56,6 +57,10 @@ class View
      */
     public function afterExecute(\Magento\Catalog\Controller\Category\View $action, $page)
     {
+        if (!$page instanceof Page) {
+            return $page;
+        }
+        
         if ($this->_moduleHelper->ajaxEnabled() && $action->getRequest()->isAjax()) {
             $navigation = $page->getLayout()->getBlock('catalog.leftnav');
             $products   = $page->getLayout()->getBlock('category.products');
