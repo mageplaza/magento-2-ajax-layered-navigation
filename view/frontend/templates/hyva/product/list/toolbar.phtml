@@ -85,28 +85,25 @@ $additionalOptions = ['page' => 'p'];
                     this.showLoader();
                     let link = baseUrl + queryString;
                     window.history.pushState({url: link}, '', link);
-                    fetch(link, {
-                            method: 'GET',
-                            headers: {
-                                'Content-Type': 'application/json',
-                                'X-Requested-With': 'XMLHttpRequest'
+                    // Fetch the full (cacheable) page — byte-identical to a normal navigation — and swap
+                    // only the product/navigation containers. Because the request is not marked as AJAX,
+                    // it shares the page's cache entry on every layer (FPC, Varnish, Fastly, CDN), so no
+                    // per-cache vary configuration is required.
+                    fetch(link, {method: 'GET', credentials: 'include'})
+                    .then(response => {
+                        if (!response.ok) { throw new Error('HTTP ' + response.status); }
+                        return response.text();
+                    })
+                    .then(html => {
+                        const doc = new DOMParser().parseFromString(html, 'text/html');
+                        ['#layer-product-list', '#layered-filter-block-container'].forEach((selector) => {
+                            const source = doc.querySelector(selector);
+                            const target = document.querySelector(selector);
+                            if (source && target) {
+                                target.innerHTML = source.innerHTML;
+                                hyva.activateScripts(target);
                             }
-                        }
-                    ).then(response => response.json())
-                    .then(data => {
-                        let productContainer = document.querySelector('#layer-product-list');
-                        let layerContainer   = document.querySelector('#layered-filter-block-container');
-                        if (productContainer) {
-                            productContainer.innerHTML = data.products;
-                            hyva.activateScripts(productContainer);
-                        }
-
-                        if (layerContainer) {
-                            layerContainer.innerHTML = data.navigation;
-                            hyva.activateScripts(layerContainer);
-                        }
-
-                        window.history.pushState({url: link}, '', link);
+                        });
                         this.hideLoader();
                     }).catch(error => {
                         location.href = baseUrl + queryString;

@@ -20,11 +20,4 @@
  */
 -->
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
-    <preference for="Magento\CatalogSearch\Controller\Result\Index" type="Mageplaza\AjaxLayer\Controller\Search\Result\Index"/>
-    <type name="Magento\Catalog\Controller\Category\View">
-        <plugin name="ajax_layer_navigation" type="Mageplaza\AjaxLayer\Plugin\Controller\Category\View" sortOrder="1"/>
-    </type>
-    <type name="Magento\Framework\App\PageCache\IdentifierInterface">
-        <plugin name="ajax_layer_fpc_vary_by_ajax" type="Mageplaza\AjaxLayer\Plugin\PageCache\IdentifierVaryByAjax"/>
-    </type>
 </config>
