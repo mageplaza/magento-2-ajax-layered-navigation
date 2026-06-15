@@ -48,7 +48,6 @@ define([
 
             this._super();
 
-            this.initProductListUrl();
             this.initObserve();
             this.initWishlistCompare();
         },
@@ -73,34 +72,6 @@ define([
             return this;
         },
 
-        initProductListUrl: function () {
-            var isProcessToolbar = false;
-            $.mage.productListToolbarForm.prototype.changeUrl = function (paramName, paramValue, defaultValue) {
-                if (isProcessToolbar) {
-                    return;
-                }
-                isProcessToolbar = true;
-
-                var urlPaths = this.options.url.split('?'),
-                    baseUrl = urlPaths[0],
-                    urlParams = urlPaths[1] ? urlPaths[1].split('&') : [],
-                    paramData = {},
-                    parameters;
-                for (var i = 0; i < urlParams.length; i++) {
-                    parameters = urlParams[i].split('=');
-                    paramData[parameters[0]] = parameters[1] !== undefined
-                        ? window.decodeURIComponent(parameters[1].replace(/\+/g, '%20'))
-                        : '';
-                }
-                paramData[paramName] = paramValue;
-                if (paramValue === defaultValue) {
-                    delete paramData[paramName];
-                }
-                paramData = $.param(paramData);
-                submitFilterAction(baseUrl + (paramData.length ? '?' + paramData : ''));
-            }
-        },
-
         initObserve: function () {
             var self = this;
 
@@ -117,21 +88,7 @@ define([
                 }, 0)
             }
 
-            var pageElements = $('#layer-product-list').find('.pages a');
-            pageElements.each(function () {
-                var el = $(this),
-                    link = self.checkUrl(el.prop('href'));
-                if (!link) {
-                    return;
-                }
-
-                el.bind('click', function (e) {
-                    submitFilterAction(link);
-                    e.stopPropagation();
-                    e.preventDefault();
-                })
-            });
-
+            // Pagination AJAX is handled by Mageplaza_AjaxLayer/js/view/toolbar (base handle).
             var currentElements = this.element.find('.filter-current a, .filter-actions a');
             currentElements.each(function (index) {
                 var el = $(this),

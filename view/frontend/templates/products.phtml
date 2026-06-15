@@ -23,3 +23,12 @@
 <div id="layer-product-list">
     <?= /** @noEscape */ $block->getChildHtml() ?>
 </div>
+<?php // Luma only: wire AJAX toolbar (sort/limit/pagination) independently of the layered-nav widget.
+      // Ignored by Hyvä (no RequireJS / x-magento-init). Re-runs on each AJAX swap via mage.apply(). ?>
+<script type="text/x-magento-init">
+    {
+        "#layer-product-list": {
+            "Mageplaza_AjaxLayer/js/view/toolbar": {}
+        }
+    }
+</script>
