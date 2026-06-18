@@ -162,16 +162,33 @@ $heroIcons = $viewModels->require(\Hyva\Theme\ViewModel\HeroiconsOutline::class)
                         if (!response.ok) { throw new Error('HTTP ' + response.status); }
                         return response.text();
                     })
-                    .then(html => {
-                        const doc = new DOMParser().parseFromString(html, 'text/html');
-                        ['#layer-product-list', '#layered-filter-block-container'].forEach((selector) => {
-                            const source = doc.querySelector(selector);
-                            const target = document.querySelector(selector);
-                            if (source && target) {
-                                target.innerHTML = source.innerHTML;
-                                hyva.activateScripts(target);
+                    .then(text => {
+                        const doc = new DOMParser().parseFromString(text, 'text/html');
+                        if (doc.querySelector('#layer-product-list')) {
+                            // DOM-first: full HTML page
+                            ['#layer-product-list', '#layered-filter-block-container'].forEach((selector) => {
+                                const source = doc.querySelector(selector);
+                                const target = document.querySelector(selector);
+                                if (source && target) {
+                                    target.innerHTML = source.innerHTML;
+                                    hyva.activateScripts(target);
+                                }
+                            });
+                        } else {
+                            // fallback: JSON payload {products, navigation}
+                            let data;
+                            try { data = JSON.parse(text); } catch (e) { this.isLoading = false; return; }
+                            const productContainer = document.querySelector('#layer-product-list');
+                            const layerContainer   = document.querySelector('#layered-filter-block-container');
+                            if (productContainer && data.products != null) {
+                                productContainer.innerHTML = data.products;
+                                hyva.activateScripts(productContainer);
                             }
-                        });
+                            if (layerContainer && data.navigation != null) {
+                                layerContainer.innerHTML = data.navigation;
+                                hyva.activateScripts(layerContainer);
+                            }
+                        }
                         this.isLoading = false;
                     }).catch(error => {
                         this.isLoading = false;

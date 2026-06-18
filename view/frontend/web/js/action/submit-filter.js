@@ -133,22 +133,30 @@ define(
                 }
                 return response.text();
             }).then(function (html) {
-                var $page = $('<div></div>').append($.parseHTML(html));
-
-                var navigation = $page.find('.layered-filter-block-container').html();
-                if (navigation != null) {
-                    layerContainer.html(navigation);
-                }
-
+                var $page    = $('<div></div>').append($.parseHTML(html));
                 var products = $page.find('#layer-product-list').html();
-                if (products != null) {
-                    productContainer.html(products);
-                }
 
-                // keep the robots meta tag in sync with the fetched page
-                $page.find('meta[name="robots"]').each(function () {
-                    $('head meta[name="robots"]').first().replaceWith($(this));
-                });
+                if (products != null) {
+                    // DOM-first: full HTML page
+                    var navigation = $page.find('.layered-filter-block-container').html();
+                    if (navigation != null) {
+                        layerContainer.html(navigation);
+                    }
+                    productContainer.html(products);
+
+                    // keep the robots meta tag in sync with the fetched page
+                    $page.find('meta[name="robots"]').each(function () {
+                        $('head meta[name="robots"]').first().replaceWith($(this));
+                    });
+                } else {
+                    // fallback: JSON payload {products, navigation}
+                    var data;
+                    try { data = JSON.parse(html); } catch (e) { data = null; }
+                    if (data) {
+                        if (data.navigation != null) { layerContainer.html(data.navigation); }
+                        if (data.products != null) { productContainer.html(data.products); }
+                    }
+                }
 
                 if (productContainer.length) {
                     ko.cleanNode(productContainer[0]);
