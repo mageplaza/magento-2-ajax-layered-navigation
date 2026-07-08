@@ -30,8 +30,9 @@ define(
     function ($, storage, urlBuilder, loader, mage, ko) {
         'use strict';
 
-        var productContainer = $('#layer-product-list'),
-            layerContainer   = $('.layered-filter-block-container');
+        var productContainer   = $('#layer-product-list'),
+            layerContainer     = $('.layered-filter-block-container'),
+            quickViewContainer = $('#mpquickview-popup');
 
         return function (submitUrl, isChangeUrl, method) {
             /** save active state */
@@ -148,13 +149,28 @@ define(
                     $page.find('meta[name="robots"]').each(function () {
                         $('head meta[name="robots"]').first().replaceWith($(this));
                     });
+
+                    // sync optional Mageplaza blocks that also live in the full page
+                    var quickview = $page.find('#mpquickview-popup').html();
+                    if (quickview != null && quickViewContainer.length) {
+                        quickViewContainer.html(quickview);
+                    }
+                    var finder = $page.find('.mpproductfinder-block').html();
+                    if (finder != null) {
+                        $('.mpproductfinder-block').html(finder);
+                    }
                 } else {
-                    // fallback: JSON payload {products, navigation}
+                    // fallback: JSON payload {products, navigation, backUrl, quickview, finder}
                     var data;
                     try { data = JSON.parse(html); } catch (e) { data = null; }
                     if (data) {
+                        if (data.backUrl) { window.location.href = data.backUrl; return; }
                         if (data.navigation != null) { layerContainer.html(data.navigation); }
                         if (data.products != null) { productContainer.html(data.products); }
+                        if (data.quickview != null && quickViewContainer.length) {
+                            quickViewContainer.html(data.quickview);
+                        }
+                        if (data.finder != null) { $('.mpproductfinder-block').html(data.finder); }
                     }
                 }
 

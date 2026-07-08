@@ -97,13 +97,15 @@ $additionalOptions = ['page' => 'p'];
                     .then(text => {
                         const doc = new DOMParser().parseFromString(text, 'text/html');
                         if (doc.querySelector('#layer-product-list')) {
-                            // DOM-first: full HTML page
-                            ['#layer-product-list', '#layered-filter-block-container'].forEach((selector) => {
+                            // DOM-first: full HTML page. Activate inline scripts (e.g. initLayeredSwatch_*)
+                            // on the detached node BEFORE attaching it — otherwise Alpine inits the new
+                            // x-data before hyva.activateScripts() defines the function it references.
+                            ['#layer-product-list', '#layered-filter-block-container', '#mpquickview-popup', '.mpproductfinder-block'].forEach((selector) => {
                                 const source = doc.querySelector(selector);
                                 const target = document.querySelector(selector);
                                 if (source && target) {
-                                    target.innerHTML = source.innerHTML;
-                                    hyva.activateScripts(target);
+                                    hyva.activateScripts(source);
+                                    target.replaceWith(source);
                                 }
                             });
                         } else {
