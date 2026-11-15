@@ -57,7 +57,10 @@ class Data extends AbstractData
             if ($key === 'amp;dimbaar') {
                 continue;
             }
-            $filterParams[htmlentities($key)] = htmlentities($param);
+            if (!is_scalar($param)) {
+                continue;
+            }
+            $filterParams[htmlentities($key)] = htmlentities((string) $param);
         }
         $config = new DataObject([
             'active' => array_keys($filterParams),

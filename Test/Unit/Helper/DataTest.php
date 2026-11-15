@@ -96,6 +96,31 @@ class DataTest extends StaticJsonTestCase
         $this->assertTrue($data['isCustomerLoggedIn']);
     }
 
+    public function testGetLayerConfigurationSkipsArrayParams(): void
+    {
+        $request = $this->createMock(RequestInterface::class);
+        $request->method('getParams')->willReturn([
+            'a'     => ['1', '2'],
+            'color' => 'red',
+        ]);
+
+        $session = $this->createMock(Session::class);
+        $session->method('isLoggedIn')->willReturn(false);
+
+        $this->registerJsonObjectManager([Session::class => $session]);
+
+        $helper = $this->createPartialMock(Data::class, ['_getRequest']);
+        $helper->method('_getRequest')->willReturn($request);
+
+        $objectManagerProperty = new ReflectionProperty(Data::class, 'objectManager');
+        $objectManagerProperty->setValue($helper, $this->getInaccessibleObjectManager());
+
+        $data = json_decode($helper->getLayerConfiguration([]), true);
+
+        $this->assertSame(['color'], $data['active']);
+        $this->assertSame(['color' => 'red'], $data['params']);
+    }
+
     /**
      * The helper resolves the customer session through the same global ObjectManager
      * registered for static jsonEncode(); reuse that stub instance here.
